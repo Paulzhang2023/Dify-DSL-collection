@@ -1,10 +1,5 @@
 app:
-  description: This GPT will convert input titles or content into SEO-friendly English
-    URL slugs. The slugs will clearly convey the original meaning while being concise
-    and not exceeding 60 characters. If the input content is too long, the GPT will
-    first condense it into an English phrase within 60 characters before generating
-    the slug. If the title is too short, the GPT will prompt the user to input a longer
-    title. Special characters in the input will be directly removed.
+  description: 此 GPT 会将输入的标题或内容转换为有利于 SEO 的英文 URL slug。slug 会清晰地传达原文含义，同时保持简洁，且不超过 60 个字符。如果输入内容过长，GPT 会先将其压缩为 60 个字符以内的英文短语，然后再生成 slug。如果标题过短，GPT 会提示用户输入更长的标题。输入中的特殊字符将被直接删除。
   icon: "\U0001F916"
   icon_background: '#FFEAD5'
   mode: workflow
