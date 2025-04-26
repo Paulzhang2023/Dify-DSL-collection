@@ -6,7 +6,6 @@ Make chatbot can persistently remember customized information per user.
 workflow view:
 
 ![LongTermMemory-workflow](screenshots/LongTermMemory-workflow.png)
-
 # How it works
 
 Here is the major logic of this workflow:
