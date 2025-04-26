@@ -3,7 +3,7 @@ app:
   icon: star_and_crescent
   icon_background: '#FFEAD5'
   mode: advanced-chat
-  name: 八字論命
+  name: 八字算命
   use_icon_as_answer_icon: false
 kind: app
 version: 0.1.5
@@ -44,7 +44,7 @@ workflow:
       https://fatew.com/
 
 
-      請問您要算的是下列哪一項?'
+      请问您要算的是下列哪一项?'
     retriever_resource:
       enabled: true
     sensitive_word_avoidance:
@@ -52,13 +52,13 @@ workflow:
     speech_to_text:
       enabled: false
     suggested_questions:
-    - 事業
+    - 事业
     - 健康
-    - 愛情
+    - 爱情
     - 家庭
     - 父母
     - 子女
-    - 綜合
+    - 综合
     suggested_questions_after_answer:
       enabled: false
     text_to_speech:
@@ -135,16 +135,16 @@ workflow:
     - data:
         desc: ''
         selected: false
-        title: 開始
+        title: 开始
         type: start
         variables:
-        - label: 國曆生日
+        - label: 阳历生日
           max_length: 48
           options: []
           required: true
           type: text-input
           variable: bday
-        - label: 出生時間(不確定可免填)
+        - label: 出生时间(不确定可免填)
           max_length: 48
           options: []
           required: false
@@ -187,7 +187,7 @@ workflow:
         memory:
           query_prompt_template: '性別: {{#1740411020068.sex#}}
 
-            西元生日: {{#1740411020068.bday#}}
+            公元生日: {{#1740411020068.bday#}}
 
             出生時辰: {{#1740411020068.time#}}
 
@@ -195,7 +195,7 @@ workflow:
 
             目前日期: {{#1740457678034.text#}}
 
-            哪方面的運勢: {{#sys.query#}}'
+            哪方面的运势: {{#sys.query#}}'
           role_prefix:
             assistant: ''
             user: ''
@@ -212,29 +212,29 @@ workflow:
         prompt_template:
         - id: 3c49a062-9ac1-46d1-a2a1-c147d5da51fb
           role: system
-          text: '農曆參考資訊:{{#context#}}
+          text: '农历参考:{{#context#}}
 
             ---
 
-            你是八字算命大師，請依據提供資料計算生辰八字，如果出生時辰沒填寫，則列出當天所有時辰的命格分析
+            你是八字算命大師，请依据提供资料计算生辰八字，如果出生時辰沒填写，则列出当天所有时辰的命格分析
 
-            依下列步驟進行
+            依下列步骤进行
 
-            1. 依據出生地換算經度
+            1. 依据出生地换算经度
 
-            2. 計算命盤，請務必確認命盤是否正確，尤其出生日跟時辰請依據經度換算
+            2. 计算命盘，请务必确认命盘是否正确，尤其出生日跟时辰請依據經度換算
 
             3. 若沒填出生時辰, 則批次計算當日所有時辰, 且每個時段都計算八字跟運勢
 
             4. 若沒填出生地, 則使用經度121°40''E換算
 
-            5. 只需分析今年運勢，最後須給出詳細的具體建議
+            5. 只需分析今年运势，最後須給出詳細的具體建議
 
-            6. 使用繁體中文回答,並使用台灣慣用語
+            6. 使用简体中文回答
 
-            7. 解釋前先列出求問幾基本資訊以及農曆生日跟基本命盤, 讓求問者確認資料是否正確
+            7. 解釋前先列出求問幾基本信息以及農曆生日跟基本命盤, 讓求問者確認資料是否正確
 
-            8. 解釋請用通俗易懂的語言，讓國中學生也能讀得懂的內容解釋'
+            8. 解释請用通俗易懂的語言，让中学生也能读得懂的內容解釋'
         selected: true
         title: LLM
         type: llm
@@ -255,14 +255,14 @@ workflow:
       type: custom
       width: 242
     - data:
-        answer: '以下為本次八字論命結果, 僅供參考, 切勿迷信
+        answer: '以下为本次八字算命結果, 仅供参考, 切勿迷信
 
           ---
 
           {{#llm.text#}}'
         desc: ''
         selected: false
-        title: 直接回覆
+        title: 直接回复
         type: answer
         variables: []
       height: 117
@@ -332,7 +332,7 @@ workflow:
         - bday
         reasoning_mode: prompt
         selected: false
-        title: 參數提取器
+        title: 参数提取器
         type: parameter-extractor
         variables: []
         vision:
@@ -370,7 +370,7 @@ workflow:
           max_connect_timeout: 0
           max_read_timeout: 0
           max_write_timeout: 0
-        title: HTTP 請求
+        title: HTTP 请求
         type: http-request
         url: http://www.nongli.info/index.php?c=solar&year={{#1740466792439.year#}}&month={{#1740466792439.month#}}&date={{#1740466792439.day#}}
         variables: []
