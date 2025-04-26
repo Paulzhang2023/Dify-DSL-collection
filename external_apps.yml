@@ -1,0 +1,84 @@
+dataspell:
+  app_type: installable
+  description: >
+    DataSpell is an IDE for exploratory data analysis and prototyping machine learning models.
+    It combines the interactivity of Jupyter notebooks with the intelligent Python and R coding
+    assistance of PyCharm in one user-friendly environment.
+  detector:
+    type: 'import!::JetBrainsDetector'
+    args: [ 'DS' ]
+  display_name: DataSpell
+  extra_arguments: null
+  image_path: dataspell_icon.svg
+  install: https://anaconda.com/dataspell-navigator
+  is_available: '::jetbrains_is_available'
+  rank: 1
+
+pycharm_ce:
+  app_type: installable
+  description: >
+    An IDE by JetBrains for pure Python development. Supports code completion, listing, and debugging.
+  detector:
+    type: 'import!::JetBrainsDetector'
+    args: [ 'PC', 'PE' ]
+  display_name: PyCharm Community
+  extra_arguments: null
+  image_path: pycharm-ce-icon.png
+  is_available: '::jetbrains_is_available'
+
+pycharm_pro:
+  app_type: installable
+  description: >
+    A full-fledged IDE by JetBrains for both Scientific and Web Python development. Supports HTML, JS, and SQL.
+  detector:
+    type: 'import!::JetBrainsDetector'
+    args: [ 'PY' ]
+  display_name: PyCharm Professional
+  extra_arguments: null
+  image_path: pycharm-icon.png
+  install: https://www.anaconda.com/pycharm_navigator
+  is_available: '::jetbrains_is_available'
+
+vscode:
+  app_type: installable
+  description: >
+    Streamlined code editor with support for development operations like debugging, task running and
+    version control.
+  detector: '::vscode_detector'
+  display_name: VS Code
+  extra_arguments: '::vscode_extra_arguments'
+  image_path: vscode-icon-1024x1024.png
+  install_extensions: '::vscode_install_extensions'
+  is_available: true
+  update_config: '::vscode_update_config'
+
+datalore:
+  app_type: web_app
+  description: >
+    Kick-start your data science projects in seconds in a pre-configured environment. Enjoy coding assistance for
+    Python, SQL, and R in Jupyter notebooks and benefit from no-code automations. Use Datalore online for free.
+  display_name: Datalore
+  image_path: datalore-icon.png
+  is_available: true
+  url: https://www.anaconda.com/datalore_navigator
+
+ibm_watson:
+  app_type: web_app
+  description: >
+    IBM Watson Studio Cloud provides you the tools to analyze and visualize data, to cleanse and shape
+    data, to create and train machine learning models. Prepare data and build models, using open source
+    data science tools or visual modeling.
+  display_name: IBM Watson Studio Cloud
+  image_path: ibm-watson-studio.png
+  is_available: true
+  url: https://www.anaconda.com/ibm_wsc_navigator
+
+oracle_oci:
+  app_type: web_app
+  description: >
+    OCI Data Science offers a machine learning platform to build, train, manage, and deploy your machine learning models
+    on the cloud with your favorite open-source tools
+  display_name: Oracle Data Science Service
+  image_path: oracle.png
+  is_available: true
+  url: https://www.anaconda.com/oracle-data-science-service

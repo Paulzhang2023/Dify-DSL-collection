@@ -1,0 +1,2014 @@
+app:
+  description: ''
+  icon: 🏥
+  icon_background: '#FFE4E8'
+  mode: advanced-chat
+  name: 患者导诊
+  use_icon_as_answer_icon: false
+kind: app
+version: 0.1.5
+workflow:
+  conversation_variables:
+  - description: 'Determine is this the first round of conversation. '
+    id: 6d5991a5-91ce-4bc5-b7a4-37653e56b44e
+    name: is_first_message
+    selector:
+    - conversation
+    - is_first_message
+    value: 1
+    value_type: number
+  - description: 'Patient''s symptoms info. '
+    id: 03591dfd-cf51-4f9b-ba2f-1b81ac8f57cd
+    name: symptom
+    selector:
+    - conversation
+    - symptom
+    value: 'null'
+    value_type: string
+  - description: 'the recommended hospital department or a possible reasons/areas
+      of illness. '
+    id: b3dee087-6d05-4821-b44f-a2efbaee7a0e
+    name: department
+    selector:
+    - conversation
+    - department
+    value: ''
+    value_type: string
+  - description: 'Patient''s age. '
+    id: 9c845d68-ad98-46b5-9f78-c5024b57530b
+    name: age
+    selector:
+    - conversation
+    - age
+    value: ''
+    value_type: string
+  - description: 'Patient''s gender. '
+    id: 78460afc-5988-4052-bac8-981478cae6e5
+    name: gender
+    selector:
+    - conversation
+    - gender
+    value: ''
+    value_type: string
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: When chatting, enter your gender, age and symptoms, and we
+      will recommend you a department to visit. You can enter them all at once or
+      in batches.
+    retriever_resource:
+      enabled: false
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions:
+    - 'I am 25, male, have a slight headache. '
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: template-transform
+      id: 1722948641356-false-1722948649406-target
+      source: '1722948641356'
+      sourceHandle: 'false'
+      target: '1722948649406'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: template-transform
+        targetType: answer
+      id: 1722948649406-source-1722948653559-target
+      source: '1722948649406'
+      sourceHandle: source
+      target: '1722948653559'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: llm
+      id: 1722948641356-ec370d4a-2bdc-4a6b-8878-80d96b2f33d4-1722954831811-target
+      source: '1722948641356'
+      sourceHandle: ec370d4a-2bdc-4a6b-8878-80d96b2f33d4
+      target: '1722954831811'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: llm
+      id: 1722948641356-91b1b418-e8f5-4c01-beff-4e44f4e464e0-1722954924720-target
+      source: '1722948641356'
+      sourceHandle: 91b1b418-e8f5-4c01-beff-4e44f4e464e0
+      target: '1722954924720'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: assigner
+      id: 1722954924720-source-1722954934239-target
+      source: '1722954924720'
+      sourceHandle: source
+      target: '1722954934239'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: llm
+      id: 1722948641356-29b927b2-c543-450a-b6ce-11630bdca300-1722955026661-target
+      source: '1722948641356'
+      sourceHandle: 29b927b2-c543-450a-b6ce-11630bdca300
+      target: '1722955026661'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: variable-aggregator
+      id: 1722955046266-source-1722955082746-target
+      source: '1722955046266'
+      sourceHandle: source
+      target: '1722955082746'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: variable-aggregator
+      id: 1722955054068-source-1722955082746-target
+      source: '1722955054068'
+      sourceHandle: source
+      target: '1722955082746'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: assigner
+        targetType: template-transform
+      id: 1722954934239-source-1722955163497-target
+      source: '1722954934239'
+      sourceHandle: source
+      target: '1722955163497'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: template-transform
+        targetType: answer
+      id: 1722955163497-source-1722955184232-target
+      source: '1722955163497'
+      sourceHandle: source
+      target: '1722955184232'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: assigner
+      id: 1722954831811-source-1722955666307-target
+      source: '1722954831811'
+      sourceHandle: source
+      target: '1722955666307'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: assigner
+        targetType: llm
+      id: 1722955666307-source-1722955046266-target
+      source: '1722955666307'
+      sourceHandle: source
+      target: '1722955046266'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: assigner
+      id: 1722955026661-source-1722955684908-target
+      source: '1722955026661'
+      sourceHandle: source
+      target: '1722955684908'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: assigner
+        targetType: llm
+      id: 1722955684908-source-1722955054068-target
+      source: '1722955684908'
+      sourceHandle: source
+      target: '1722955054068'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: llm
+      id: 1722948641356-3c185913-fa1f-4f8e-b2ee-ac003d0da6c3-1722955850138-target
+      source: '1722948641356'
+      sourceHandle: 3c185913-fa1f-4f8e-b2ee-ac003d0da6c3
+      target: '1722955850138'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: assigner
+      id: 1722955850138-source-1722955855002-target
+      source: '1722955850138'
+      sourceHandle: source
+      target: '1722955855002'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: assigner
+        targetType: llm
+      id: 1722955855002-source-1722955862857-target
+      source: '1722955855002'
+      sourceHandle: source
+      target: '1722955862857'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: variable-aggregator
+      id: 1722955862857-source-1722955082746-target
+      source: '1722955862857'
+      sourceHandle: source
+      target: '1722955082746'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: assigner
+      id: 17229568358470-source-17229568563440-target
+      source: '17229568358470'
+      sourceHandle: source
+      target: '17229568563440'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: assigner
+        targetType: template-transform
+      id: 17229568563440-source-17229568595490-target
+      source: '17229568563440'
+      sourceHandle: source
+      target: '17229568595490'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: template-transform
+        targetType: answer
+      id: 17229568595490-source-17229568606330-target
+      source: '17229568595490'
+      sourceHandle: source
+      target: '17229568606330'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: variable-aggregator
+        targetType: if-else
+      id: 1722955082746-source-1722956878299-target
+      source: '1722955082746'
+      sourceHandle: source
+      target: '1722956878299'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: llm
+      id: 1722956878299-false-17229568358470-target
+      source: '1722956878299'
+      sourceHandle: 'false'
+      target: '17229568358470'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: answer
+      id: 1722956878299-true-1722955144801-target
+      source: '1722956878299'
+      sourceHandle: 'true'
+      target: '1722955144801'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: assigner
+        targetType: assigner
+      id: 1722957594963-source-1722957638479-target
+      source: '1722957594963'
+      sourceHandle: source
+      target: '1722957638479'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: assigner
+        targetType: assigner
+      id: 1722957638479-source-1722957636037-target
+      source: '1722957638479'
+      sourceHandle: source
+      target: '1722957636037'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: if-else
+      id: 1722918342810-source-1722958736715-target
+      source: '1722918342810'
+      sourceHandle: source
+      target: '1722958736715'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: parameter-extractor
+      id: 1722958736715-true-1722957436489-target
+      source: '1722958736715'
+      sourceHandle: 'true'
+      target: '1722957436489'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: parameter-extractor
+        targetType: assigner
+      id: 1722957436489-source-1722957594963-target
+      source: '1722957436489'
+      sourceHandle: source
+      target: '1722957594963'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: variable-aggregator
+        targetType: if-else
+      id: 1722959274773-source-1722948641356-target
+      source: '1722959274773'
+      sourceHandle: source
+      target: '1722948641356'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: variable-aggregator
+      id: 1722958736715-false-1722959274773-target
+      source: '1722958736715'
+      sourceHandle: 'false'
+      target: '1722959274773'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: assigner
+        targetType: variable-aggregator
+      id: 1722959303858-source-1722959274773-target
+      source: '1722959303858'
+      sourceHandle: source
+      target: '1722959274773'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: assigner
+        targetType: code
+      id: 1722957636037-source-1722959549093-target
+      source: '1722957636037'
+      sourceHandle: source
+      target: '1722959549093'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: assigner
+      id: 1722959549093-source-1722959303858-target
+      source: '1722959549093'
+      sourceHandle: source
+      target: '1722959303858'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: Start
+        type: start
+        variables: []
+      height: 54
+      id: '1722918342810'
+      position:
+        x: 1492.8571428571431
+        y: 287.7857142857143
+      positionAbsolute:
+        x: 1492.8571428571431
+        y: 287.7857142857143
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: ec370d4a-2bdc-4a6b-8878-80d96b2f33d4
+          conditions:
+          - comparison_operator: empty
+            id: ad17c8cd-fada-4b8a-b23d-e6a523eb5fb5
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - age
+          - comparison_operator: contains
+            id: 7ba1d46b-2165-41f2-8246-6d735c1c6a59
+            value: 'null'
+            varType: string
+            variable_selector:
+            - conversation
+            - age
+          id: ec370d4a-2bdc-4a6b-8878-80d96b2f33d4
+          logical_operator: or
+        - case_id: 29b927b2-c543-450a-b6ce-11630bdca300
+          conditions:
+          - comparison_operator: empty
+            id: bb1f2589-7dd8-4151-894c-681d9538075a
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - gender
+          - comparison_operator: contains
+            id: 2fadeb8c-3bd7-47d3-89df-43522048808a
+            value: 'null'
+            varType: string
+            variable_selector:
+            - conversation
+            - gender
+          id: 29b927b2-c543-450a-b6ce-11630bdca300
+          logical_operator: or
+        - case_id: 3c185913-fa1f-4f8e-b2ee-ac003d0da6c3
+          conditions:
+          - comparison_operator: empty
+            id: e5a73d4f-29b3-4f2f-9248-b58bed4394d0
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - symptom
+          - comparison_operator: contains
+            id: a06199e4-240e-4c1d-aa44-204d23f63d59
+            value: 'null'
+            varType: string
+            variable_selector:
+            - conversation
+            - symptom
+          id: 3c185913-fa1f-4f8e-b2ee-ac003d0da6c3
+          logical_operator: or
+        - case_id: 91b1b418-e8f5-4c01-beff-4e44f4e464e0
+          conditions:
+          - comparison_operator: empty
+            id: 6cd9a119-c2a6-4e32-9c1f-f7a83f8bf26b
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - department
+          id: 91b1b418-e8f5-4c01-beff-4e44f4e464e0
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: IF/ELSE
+        type: if-else
+      height: 348
+      id: '1722948641356'
+      position:
+        x: 2766
+        y: 373.5
+      positionAbsolute:
+        x: 2766
+        y: 373.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        selected: false
+        template: '{{ department }}'
+        title: Template
+        type: template-transform
+        variables:
+        - value_selector:
+          - conversation
+          - department
+          variable: department
+      height: 54
+      id: '1722948649406'
+      position:
+        x: 3070
+        y: 373.5
+      positionAbsolute:
+        x: 3070
+        y: 373.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: "You have symptoms related to the following: \n{{#1722948649406.output#}}"
+        desc: ''
+        selected: false
+        title: Reply
+        type: answer
+        variables: []
+      height: 119
+      id: '1722948653559'
+      position:
+        x: 3374
+        y: 373.5
+      positionAbsolute:
+        x: 3374
+        y: 373.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        memory:
+          query_prompt_template: 'Here is chat history: {{#sys.query#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: true
+            size: 50
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: qwen-vl-max-0809
+          provider: tongyi
+        prompt_template:
+        - id: c965154a-3942-4f1d-98fb-7e34c97b15b6
+          role: system
+          text: '<instructions>
+
+            从聊天记录中提取用户提到的年龄。
+
+            如果用户在多个聊天记录中提到了自己的年龄，提取最新记录中的年龄。
+
+            如果聊天记录中没有提到用户的年龄，输出空值（null）。
+
+            确保输出不包含任何XML标签。
+
+            Notes:
+
+            -确保提取的年龄是用户明确提到的。
+
+            -如果用户没有提到自己的年龄，输出空值（null）。
+
+            -确保输出格式清晰易懂。
+
+            </instructions>
+
+
+            <examples>
+
+            <example>
+
+            <chat>
+
+            user：我今年25岁。
+
+            user：我的弟弟比我小两岁。
+
+            </chat>
+
+            <output>
+
+            25
+
+            </output>
+
+            </example>
+
+
+            <example>
+
+            <chat>
+
+            user：我的弟弟比我小两岁。
+
+            </chat>
+
+            <output>
+
+            无
+
+            </output>
+
+            </example>
+
+
+            <example>
+
+            <chat>
+
+            user：我昨天刚满30岁。
+
+            agent：明白了，请提供您的性别。
+
+            user：男
+
+            agent：您有什么症状吗？
+
+            user：过去两天我一直发烧和胃痛。
+
+            </chat>
+
+            <output>
+
+            30
+
+            </output>
+
+            </example>
+
+            </examples>'
+        selected: false
+        title: Extract Patient's Age
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+            variable_selector: []
+          enabled: true
+      height: 98
+      id: '1722954831811'
+      position:
+        x: 3070
+        y: 518
+      positionAbsolute:
+        x: 3070
+        y: 518
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gpt-4o
+          provider: openai
+        prompt_template:
+        - id: 5507a45e-b1cf-4610-b138-a14cb5d9deb1
+          role: system
+          text: '<instructions>
+
+            1. Based on the provided gender, age, and symptoms, determine which hospital
+            department the patient should visit.
+
+            2. First, analyze the patient''s gender and age, as these may affect the
+            severity of certain symptoms and influence the choice of department.
+
+            3. Then, carefully read and understand the patient''s symptoms to determine
+            which departments may be related to these symptoms.
+
+            4. Match the patient''s symptoms to the most appropriate department based
+            on common medical departments and their corresponding symptoms.
+
+            5. When outputting the result, provide only the department name without
+            including any XML tags.
+
+            </instructions>
+
+
+            <examples>
+
+            <example>
+
+            <gender>Male</gender>
+
+            <age>45</age>
+
+            <symptoms>Chest pain, difficulty breathing</symptoms>
+
+            <output>Cardiology</output>
+
+            </example>
+
+
+            <example>
+
+            <gender>Female</gender>
+
+            <age>30</age>
+
+            <symptoms>Abdominal pain, nausea, vomiting</symptoms>
+
+            <output>Gastroenterology</output>
+
+            </example>
+
+
+            <example>
+
+            <gender>Male</gender>
+
+            <age>60</age>
+
+            <symptoms>Joint pain, difficulty moving</symptoms>
+
+            <output>Orthopedics</output>
+
+            </example>
+
+            </examples>'
+        - id: ea4ea6c4-a9a7-49e5-a0a4-afcd829f185c
+          role: user
+          text: '<患者信息>
+
+            年龄：{{#conversation.age#}}
+
+            性别：{{#conversation.gender#}}
+
+            症状：{{#conversation.symptom#}}'
+        selected: false
+        title: Determine Department
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+          enabled: true
+      height: 98
+      id: '1722954924720'
+      position:
+        x: 3070
+        y: 1031
+      positionAbsolute:
+        x: 3070
+        y: 1031
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        assigned_variable_selector:
+        - conversation
+        - department
+        desc: ''
+        input_variable_selector:
+        - '1722954924720'
+        - text
+        selected: false
+        title: Assign department
+        type: assigner
+        write_mode: over-write
+      height: 88
+      id: '1722954934239'
+      position:
+        x: 3374
+        y: 1048.5
+      positionAbsolute:
+        x: 3374
+        y: 1048.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        memory:
+          query_prompt_template: 'Here is the chat history: {{#sys.query#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: true
+            size: 50
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gpt-4o
+          provider: openai
+        prompt_template:
+        - id: f3aade03-5e59-471d-b0d1-829cd028640f
+          role: system
+          text: '<instructions>
+
+            1. 从聊天记录中提取用户提到的性别。
+
+            2. If the user mentions gender in multiple messages, extract the gender
+            from the most recent message.
+
+            3. If no gender is mentioned in the chat history, output null.
+
+            4. When outputting the result, do not include any XML tags.
+
+
+            Important notes:
+
+            - Ensure that the gender extracted is explicitly mentioned by the user.
+
+            - If the user has not mentioned their gender, output null.
+
+            - Ensure the output format is clear and easy to understand.
+
+
+            <examples>
+
+            <example>
+
+            <chat>
+
+            User: I''m 25 years old this year.
+
+            User: My younger brother is two years younger than me.
+
+            </chat>
+
+            <output>
+
+            null
+
+            </output>
+
+            </example>
+
+
+            <example>
+
+            <chat>
+
+            User: I am male.
+
+            </chat>
+
+            <output>
+
+            Male
+
+            </output>
+
+            </example>
+
+
+            <example>
+
+            <chat>
+
+            User: I just turned 30 yesterday.
+
+            Assistant: Okay, noted. Could you please provide your gender?
+
+            User: Female.
+
+            Assistant: Any symptoms?
+
+            User: I''ve had a fever and stomach ache for the past two days.
+
+            </chat>
+
+            <output>
+
+            Female
+
+            </output>
+
+            </example>
+
+            </examples>'
+        selected: true
+        title: Extract Patient's Gender
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+          enabled: true
+      height: 98
+      id: '1722955026661'
+      position:
+        x: 3070
+        y: 689
+      positionAbsolute:
+        x: 3070
+        y: 689
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gpt-4o
+          provider: openai
+        prompt_template:
+        - id: 55c0f28c-2936-4300-84e3-99858864c55a
+          role: system
+          text: "<instructions>\n1. Receive the variables age, gender, and symptom\
+            \ as input.\n2. Check if any of the variables are empty.\n3. If age is\
+            \ empty, prompt the patient to provide their age information.\n4. If gender\
+            \ is empty, prompt the patient to provide their gender information.\n\
+            5. If symptom is empty, prompt the patient to provide their symptom information.\n\
+            6. If all variables are non-empty, output a confirmation message indicating\
+            \ that all necessary information has been provided.\n7. The output should\
+            \ not contain any XML tags.\n</instructions>\n\n<examples>\n<example>\n\
+            <input>\nage: 25\ngender: Male\nsymptom: Headache\n</input>\n<output>\n\
+            All necessary information has been provided.\n</output>\n</example>\n\n\
+            <example>\n<input>\nage: \ngender: Female\nsymptom: Cough\n</input>\n\
+            <output>\nPlease provide your age.\n</output>\n</example>\n\n<example>\n\
+            <input>\nage: 30\ngender: \nsymptom: Fever\n</input>\n<output>\nPlease\
+            \ provide your gender.\n</output>\n</example>\n\n<example>\n<input>\n\
+            age: 45\ngender: Male\nsymptom: \n</input>\n<output>\nPlease tell us more\
+            \ about your gender. \n</output>\n</example>\n</examples>\n```"
+        - id: 8e475877-490a-41cb-8a52-cd902a0577b8
+          role: user
+          text: 'User Information：
+
+            |symptoms|{{#conversation.symptom#}}|
+
+            |age|{{#conversation.age#}}|
+
+            |gender|{{#conversation.gender#}}|
+
+            '
+        selected: false
+        title: 'Chat (Age branch) '
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+          enabled: true
+      height: 98
+      id: '1722955046266'
+      position:
+        x: 3678
+        y: 540
+      positionAbsolute:
+        x: 3678
+        y: 540
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gpt-4o
+          provider: openai
+        prompt_template:
+        - id: 54f1c126-769c-4dda-88a9-5f54419caefc
+          role: system
+          text: "<instructions>\n1. Receive the variables age, gender, and symptom\
+            \ as input.\n2. Check if any of the variables are empty.\n3. If age is\
+            \ empty, prompt the patient to provide their age information.\n4. If gender\
+            \ is empty, prompt the patient to provide their gender information.\n\
+            5. If symptom is empty, prompt the patient to provide their symptom information.\n\
+            6. If all variables are non-empty, output a confirmation message indicating\
+            \ that all necessary information has been provided.\n7. The output should\
+            \ not contain any XML tags.\n</instructions>\n\n<examples>\n<example>\n\
+            <input>\nage: 25\ngender: Male\nsymptom: Headache\n</input>\n<output>\n\
+            All necessary information has been provided.\n</output>\n</example>\n\n\
+            <example>\n<input>\nage: \ngender: Female\nsymptom: Cough\n</input>\n\
+            <output>\nPlease provide your age.\n</output>\n</example>\n\n<example>\n\
+            <input>\nage: 30\ngender: \nsymptom: Fever\n</input>\n<output>\nPlease\
+            \ provide your gender.\n</output>\n</example>\n\n<example>\n<input>\n\
+            age: 45\ngender: Male\nsymptom: \n</input>\n<output>\nPlease tell us more\
+            \ about your gender. \n</output>\n</example>\n</examples>"
+        - id: 631d9e62-98b8-4605-861a-8e19573dca4f
+          role: user
+          text: 'User Information：
+
+            |symptoms|{{#conversation.symptom#}}|
+
+            |age|{{#conversation.age#}}|
+
+            |gender|{{#conversation.gender#}}|
+
+            '
+        selected: false
+        title: 'Chat (gender branch) '
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+          enabled: true
+      height: 98
+      id: '1722955054068'
+      position:
+        x: 3678
+        y: 711
+      positionAbsolute:
+        x: 3678
+        y: 711
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        output_type: string
+        selected: false
+        title: Variable Aggregator
+        type: variable-aggregator
+        variables:
+        - - '1722955046266'
+          - text
+        - - '1722955054068'
+          - text
+        - - '1722955862857'
+          - text
+      height: 153
+      id: '1722955082746'
+      position:
+        x: 3982
+        y: 711
+      positionAbsolute:
+        x: 3982
+        y: 711
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1722955082746.output#}}'
+        desc: ''
+        selected: false
+        title: 'Reply '
+        type: answer
+        variables: []
+      height: 103
+      id: '1722955144801'
+      position:
+        x: 4590
+        y: 711
+      positionAbsolute:
+        x: 4590
+        y: 711
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        selected: false
+        template: '{{ department }}'
+        title: 'Template (Department) '
+        type: template-transform
+        variables:
+        - value_selector:
+          - conversation
+          - department
+          variable: department
+      height: 54
+      id: '1722955163497'
+      position:
+        x: 3678
+        y: 1075
+      positionAbsolute:
+        x: 3678
+        y: 1075
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: "You have symptoms related to the following: \n{{#1722955163497.output#}}"
+        desc: ''
+        selected: false
+        title: Reply
+        type: answer
+        variables: []
+      height: 135
+      id: '1722955184232'
+      position:
+        x: 3982
+        y: 1074
+      positionAbsolute:
+        x: 3982
+        y: 1074
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        assigned_variable_selector:
+        - conversation
+        - age
+        desc: ''
+        input_variable_selector:
+        - '1722954831811'
+        - text
+        selected: false
+        title: 'Assign Age '
+        type: assigner
+        write_mode: over-write
+      height: 88
+      id: '1722955666307'
+      position:
+        x: 3374
+        y: 535.5
+      positionAbsolute:
+        x: 3374
+        y: 535.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        assigned_variable_selector:
+        - conversation
+        - gender
+        desc: ''
+        input_variable_selector:
+        - '1722955026661'
+        - text
+        selected: false
+        title: Assign gender
+        type: assigner
+        write_mode: over-write
+      height: 88
+      id: '1722955684908'
+      position:
+        x: 3374
+        y: 706.5
+      positionAbsolute:
+        x: 3374
+        y: 706.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        memory:
+          query_prompt_template: 'Information of the patient: {{#sys.query#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: false
+            size: 50
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gpt-4o
+          provider: openai
+        prompt_template:
+        - id: 4442d59d-2682-4411-ac75-e3f550fa0135
+          role: system
+          text: "**Instructions:**\n1. Read the patient's chat records carefully,\
+            \ identifying and extracting information related to symptoms.\n2. Summarize\
+            \ all the extracted symptoms, ensuring that the summary is concise and\
+            \ clear.\n3. The output summary should accurately reflect the patient's\
+            \ symptoms without any unnecessary information.\n4. The output should\
+            \ not contain any XML tags.\n5. If the user does not mention any symptoms,\
+            \ output \"null.\"\n\n**Examples:**\n  **Example 1:**\n  **Input:**\n\
+            \    Patient: I’ve been having headaches for the past few days, and sometimes\
+            \ I feel nauseous. Last night I had a fever, with a temperature of about\
+            \ 38 degrees.\n  **Output:**\n    Headache, nausea, fever (temperature\
+            \ 38 degrees)\n\n  **Example 2:**\n  **Input:**\n    Patient: I've been\
+            \ coughing a lot these days, especially at night when it gets worse. My\
+            \ throat is also sore, and I feel like there's phlegm in it.\n  **Output:**\n\
+            \    Coughing (worse at night), sore throat, phlegm\n\n  **Example 3:**\n\
+            \  **Input:**\n    Patient: Recently, I've been feeling very tired and\
+            \ weak. I get short of breath when walking, and sometimes I feel chest\
+            \ tightness.\n  **Output:**\n    Fatigue, weakness, shortness of breath,\
+            \ chest tightness"
+        selected: false
+        title: Extract Patient's Symptoms
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+          enabled: true
+      height: 98
+      id: '1722955850138'
+      position:
+        x: 3070
+        y: 860
+      positionAbsolute:
+        x: 3070
+        y: 860
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        assigned_variable_selector:
+        - conversation
+        - symptom
+        desc: ''
+        input_variable_selector:
+        - '1722955850138'
+        - text
+        selected: false
+        title: Assign Symptoms
+        type: assigner
+        write_mode: over-write
+      height: 88
+      id: '1722955855002'
+      position:
+        x: 3374
+        y: 877.5
+      positionAbsolute:
+        x: 3374
+        y: 877.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gpt-4o
+          provider: openai
+        prompt_template:
+        - id: ccd17f08-f41e-414f-be3a-60bc5939ab78
+          role: system
+          text: "<instructions>\n1. Receive the variables age, gender, and symptom\
+            \ as input.\n2. Check if any of the variables are empty.\n3. If age is\
+            \ empty, prompt the patient to provide their age information.\n4. If gender\
+            \ is empty, prompt the patient to provide their gender information.\n\
+            5. If symptom is empty, prompt the patient to provide their symptom information.\n\
+            6. If all variables are non-empty, output a confirmation message indicating\
+            \ that all necessary information has been provided.\n7. The output should\
+            \ not contain any XML tags.\n</instructions>\n\n<examples>\n<example>\n\
+            <input>\nage: 25\ngender: Male\nsymptom: Headache\n</input>\n<output>\n\
+            All necessary information has been provided.\n</output>\n</example>\n\n\
+            <example>\n<input>\nage: \ngender: Female\nsymptom: Cough\n</input>\n\
+            <output>\nPlease provide your age.\n</output>\n</example>\n\n<example>\n\
+            <input>\nage: 30\ngender: \nsymptom: Fever\n</input>\n<output>\nPlease\
+            \ provide your gender.\n</output>\n</example>\n\n<example>\n<input>\n\
+            age: 45\ngender: Male\nsymptom: \n</input>\n<output>\nPlease tell us more\
+            \ about your gender. \n</output>\n</example>\n</examples>"
+        - id: d6bd7d0a-4ac4-48ac-8ed6-4759b9374e21
+          role: user
+          text: 'User Information：
+
+            |symptoms|{{#conversation.symptom#}}|
+
+            |age|{{#conversation.age#}}|
+
+            |gender|{{#conversation.gender#}}|
+
+            '
+        selected: false
+        title: 'Chat (symptom branch) '
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+          enabled: true
+      height: 98
+      id: '1722955862857'
+      position:
+        x: 3678
+        y: 882
+      positionAbsolute:
+        x: 3678
+        y: 882
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gpt-4o
+          provider: openai
+        prompt_template:
+        - id: 5507a45e-b1cf-4610-b138-a14cb5d9deb1
+          role: system
+          text: '<instructions>
+
+            1. Based on the provided gender, age, and symptoms, determine which hospital
+            department the patient should visit.
+
+            2. First, analyze the patient''s gender and age, as these may affect the
+            severity of certain symptoms and influence the choice of department.
+
+            3. Then, carefully read and understand the patient''s symptoms to determine
+            which departments may be related to these symptoms.
+
+            4. Match the patient''s symptoms to the most appropriate department based
+            on common medical departments and their corresponding symptoms.
+
+            5. When outputting the result, provide only the department name without
+            including any XML tags.
+
+            </instructions>
+
+
+            <examples>
+
+            <example>
+
+            <gender>Male</gender>
+
+            <age>45</age>
+
+            <symptoms>Chest pain, difficulty breathing</symptoms>
+
+            <output>Cardiology</output>
+
+            </example>
+
+
+            <example>
+
+            <gender>Female</gender>
+
+            <age>30</age>
+
+            <symptoms>Abdominal pain, nausea, vomiting</symptoms>
+
+            <output>Gastroenterology</output>
+
+            </example>
+
+
+            <example>
+
+            <gender>Male</gender>
+
+            <age>60</age>
+
+            <symptoms>Joint pain, difficulty moving</symptoms>
+
+            <output>Orthopedics</output>
+
+            </example>
+
+            </examples>'
+        - id: ea4ea6c4-a9a7-49e5-a0a4-afcd829f185c
+          role: user
+          text: '<患者信息>
+
+            年龄：{{#conversation.age#}}
+
+            性别：{{#conversation.gender#}}
+
+            症状：{{#conversation.symptom#}}'
+        selected: false
+        title: 'Recommend department '
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+          enabled: true
+      height: 98
+      id: '17229568358470'
+      position:
+        x: 4590
+        y: 857
+      positionAbsolute:
+        x: 4590
+        y: 857
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        assigned_variable_selector:
+        - conversation
+        - department
+        desc: ''
+        input_variable_selector:
+        - '17229568358470'
+        - text
+        selected: false
+        title: Assign department
+        type: assigner
+        write_mode: over-write
+      height: 88
+      id: '17229568563440'
+      position:
+        x: 4894
+        y: 852.5
+      positionAbsolute:
+        x: 4894
+        y: 852.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        selected: false
+        template: '{{ department }}'
+        title: 'Template (Department) '
+        type: template-transform
+        variables:
+        - value_selector:
+          - conversation
+          - department
+          variable: department
+      height: 54
+      id: '17229568595490'
+      position:
+        x: 5198
+        y: 852.5
+      positionAbsolute:
+        x: 5198
+        y: 852.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: "You have symptoms related to the following: \n{{#17229568595490.output#}}"
+        desc: ''
+        selected: false
+        title: Reply
+        type: answer
+        variables: []
+      height: 135
+      id: '17229568606330'
+      position:
+        x: 5502
+        y: 857
+      positionAbsolute:
+        x: 5502
+        y: 857
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: contains
+            id: 265ab578-5a74-4e5d-a70f-9cd03342a24b
+            value: 'null'
+            varType: string
+            variable_selector:
+            - conversation
+            - symptom
+          - comparison_operator: contains
+            id: 7541da62-400a-498d-a126-1f7fd16a03c7
+            value: 'null'
+            varType: string
+            variable_selector:
+            - conversation
+            - age
+          - comparison_operator: contains
+            id: 3c4bbff4-bf7a-4ee2-9f8b-db677ee1222a
+            value: 'null'
+            varType: string
+            variable_selector:
+            - conversation
+            - gender
+          - comparison_operator: empty
+            id: 4a2a221e-fa6a-4e60-82dd-9b3f365d27c0
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - symptom
+          - comparison_operator: empty
+            id: ca75a216-2968-46ef-97cc-49fe87ff5c26
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - age
+          - comparison_operator: empty
+            id: 508c32d0-f7bc-4ffa-869f-0d99b2bd02ce
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - gender
+          id: 'true'
+          logical_operator: or
+        desc: ''
+        selected: false
+        title: 'Is null conversation variable? '
+        type: if-else
+      height: 256
+      id: '1722956878299'
+      position:
+        x: 4286
+        y: 711
+      positionAbsolute:
+        x: 4286
+        y: 711
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        instruction: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gpt-4o
+          provider: openai
+        parameters:
+        - description: 您的年龄
+          name: age
+          required: false
+          type: string
+        - description: 您的性别
+          name: gender
+          required: false
+          type: string
+        - description: 您当前的主要症状
+          name: symptom
+          required: false
+          type: string
+        query:
+        - sys
+        - query
+        reasoning_mode: prompt
+        selected: false
+        title: Extract Patient Info
+        type: parameter-extractor
+        variables: []
+      height: 98
+      id: '1722957436489'
+      position:
+        x: 2138
+        y: 440.42857142857144
+      positionAbsolute:
+        x: 2138
+        y: 440.42857142857144
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        assigned_variable_selector:
+        - conversation
+        - age
+        desc: ''
+        input_variable_selector:
+        - '1722957436489'
+        - age
+        selected: false
+        title: Assign Age
+        type: assigner
+        write_mode: over-write
+      height: 88
+      id: '1722957594963'
+      position:
+        x: 2138
+        y: 559
+      positionAbsolute:
+        x: 2138
+        y: 559
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        assigned_variable_selector:
+        - conversation
+        - symptom
+        desc: ''
+        input_variable_selector:
+        - '1722957436489'
+        - symptom
+        selected: false
+        title: Assign symptoms
+        type: assigner
+        write_mode: over-write
+      height: 88
+      id: '1722957636037'
+      position:
+        x: 2143.714285714286
+        y: 847.5714285714286
+      positionAbsolute:
+        x: 2143.714285714286
+        y: 847.5714285714286
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        assigned_variable_selector:
+        - conversation
+        - gender
+        desc: ''
+        input_variable_selector:
+        - '1722957436489'
+        - gender
+        selected: false
+        title: Assign Gender
+        type: assigner
+        write_mode: over-write
+      height: 88
+      id: '1722957638479'
+      position:
+        x: 2138
+        y: 706.5
+      positionAbsolute:
+        x: 2138
+        y: 706.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: '='
+            id: abd5761a-5e4f-43fc-95e2-f618e55a04e5
+            value: '1'
+            varType: number
+            variable_selector:
+            - conversation
+            - is_first_message
+          id: 'true'
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: 'Is first message? '
+        type: if-else
+      height: 126
+      id: '1722958736715'
+      position:
+        x: 1815.4285714285716
+        y: 287.7857142857143
+      positionAbsolute:
+        x: 1815.4285714285716
+        y: 287.7857142857143
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        output_type: string
+        selected: false
+        title: Variable Aggregator
+        type: variable-aggregator
+        variables:
+        - - '1722957436489'
+          - symptom
+      height: 109
+      id: '1722959274773'
+      position:
+        x: 2464.857142857143
+        y: 326.3571428571429
+      positionAbsolute:
+        x: 2464.857142857143
+        y: 326.3571428571429
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        assigned_variable_selector:
+        - conversation
+        - is_first_message
+        desc: ''
+        input_variable_selector:
+        - '1722959549093'
+        - result
+        selected: false
+        title: Assign is_first_message
+        type: assigner
+        write_mode: over-write
+      height: 88
+      id: '1722959303858'
+      position:
+        x: 2143.714285714286
+        y: 1059
+      positionAbsolute:
+        x: 2143.714285714286
+        y: 1059
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "\ndef main():\n    data = 0\n    return {\n        \"result\": data,\n\
+          \    }\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: number
+        selected: false
+        title: Output 0
+        type: code
+        variables: []
+      height: 54
+      id: '1722959549093'
+      position:
+        x: 2143.714285714286
+        y: 991.8571428571427
+      positionAbsolute:
+        x: 2143.714285714286
+        y: 991.8571428571427
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        author: Dify
+        desc: ''
+        height: 140
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"When
+          chatting, enter your gender, age and symptoms, and we will recommend you
+          a department to visit. You can enter them all at once or in batches.","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 243
+      height: 140
+      id: '1723014131142'
+      position:
+        x: 1492.8571428571431
+        y: 397.57142857142867
+      positionAbsolute:
+        x: 1492.8571428571431
+        y: 397.57142857142867
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 243
+    - data:
+        author: Dify
+        desc: ''
+        height: 158
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"If
+          it is the first round of conversation, assume that the user will provide
+          all the information at once, and use the variable extractor to extract all
+          corresponding genders, symptoms, and ages.","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 280
+      height: 158
+      id: '1723014179616'
+      position:
+        x: 1794
+        y: 77.71270800588309
+      positionAbsolute:
+        x: 1794
+        y: 77.71270800588309
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 280
+    - data:
+        author: Dify
+        desc: ''
+        height: 88
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"Subsequent
+          rounds of conversation will skip this step.","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 240
+      height: 88
+      id: '1723014219485'
+      position:
+        x: 2130.024559475983
+        y: 258.3461432054888
+      positionAbsolute:
+        x: 2130.024559475983
+        y: 258.3461432054888
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 240
+    - data:
+        author: Dify
+        desc: ''
+        height: 106
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"Use
+          if/else branches to determine which conversation variable is empty. If it
+          is empty, ask the user to provide the corresponding information.","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 352
+      height: 106
+      id: '1723014244350'
+      position:
+        x: 2733.1428571428573
+        y: 229.77471463406022
+      positionAbsolute:
+        x: 2733.1428571428573
+        y: 229.77471463406022
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 352
+    - data:
+        author: Dify
+        desc: ''
+        height: 116
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"If
+          there are no empty conversation variables, recommend a department to go
+          to. If there are empty variables, continue asking/chatting.","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 403
+      height: 116
+      id: '1723014283500'
+      position:
+        x: 4286
+        y: 568.0134150065385
+      positionAbsolute:
+        x: 4286
+        y: 568.0134150065385
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 403
+    viewport:
+      x: -2291.643643155174
+      y: -226.3413048449388
+      zoom: 0.8040888484979251
