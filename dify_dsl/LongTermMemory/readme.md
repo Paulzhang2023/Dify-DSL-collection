@@ -4,8 +4,8 @@ a Dify tool for storing and retrieving long-term-memory, using Dify built-in Kno
 Make chatbot can persistently remember customized information per user.
 
 workflow view:
+![image](https://github.com/user-attachments/assets/5cda9e84-c27e-46f3-a835-3a574fec8745)
 
-![LongTermMemory-workflow](screenshots/LongTermMemory-workflow.png)
 # How it works
 
 Here is the major logic of this workflow:
@@ -63,7 +63,8 @@ add the "LongTermMemory" tool before LLM node
 
 ## step 7: config parameters for "LongTermMemory" tool
 
-![LongTermMemory-chatbot-demo-config-tool-node-parameters](screenshots/LongTermMemory-chatbot-demo-config-tool-node-parameters.png)
+![image](https://github.com/user-attachments/assets/b28d98e8-22f9-4ccb-b898-1cbc61702455)
+
 
 notes for parameters:
 
@@ -107,8 +108,8 @@ SYSTEM prompt:
 # Test:
 
 ### Scenario 1: test long-term-memory remembering
+![image](https://github.com/user-attachments/assets/3fd2b6cd-943b-4a11-88eb-cab80cd8495b)
 
-![LongTermMemory-chatbot-demo-test-long-term-memory remembering](screenshots/LongTermMemory-chatbot-demo-test-long-term-memory-remembering.png)
 
 user input:
 
@@ -130,7 +131,7 @@ user input:
 
 ### Scenario 2: test long-term-memory retrieving
 
-![LongTermMemory-chatbot-demo-test-long-term-memory-retrieving](screenshots/LongTermMemory-chatbot-demo-test-long-term-memory-retrieving.png)
+![image](https://github.com/user-attachments/assets/825d0670-89a1-4792-99a7-48ad679aaa16)
 
 Debug and Preview -> Restart (make sure to start a new conversion without chat history)
 
@@ -145,7 +146,8 @@ user input:
 
 ### Scenario 3: each user has a standalone long-term-memory space
 
-![LongTermMemory-chatbot-demo-test-long-term-memory-standalone-space](screenshots/LongTermMemory-chatbot-demo-test-long-term-memory-standalone-space.png)
+![image](https://github.com/user-attachments/assets/509fc358-be77-4873-8e1c-2c9bc51ac408)
+
 
 Run App (You can use different browsers to access and impersonate different users)
 
