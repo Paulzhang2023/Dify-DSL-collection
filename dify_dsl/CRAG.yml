@@ -1,0 +1,474 @@
+app:
+  description: CRAG
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: CRAG
+  use_icon_as_answer_icon: false
+kind: app
+version: 0.1.1
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+    opening_statement: ''
+    retriever_resource:
+      enabled: false
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        sourceType: start
+        targetType: knowledge-retrieval
+      id: 1711528914102-1711528915811
+      source: '1711528914102'
+      sourceHandle: source
+      target: '1711528915811'
+      targetHandle: target
+      type: custom
+    - data:
+        isInIteration: false
+        sourceType: knowledge-retrieval
+        targetType: llm
+      id: 1711528915811-source-1711528917469-target
+      source: '1711528915811'
+      sourceHandle: source
+      target: '1711528917469'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: if-else
+      id: 1711528917469-source-1725331539772-target
+      source: '1711528917469'
+      sourceHandle: source
+      target: '1725331539772'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: tool
+      id: 1725331539772-false-1725331527634-target
+      source: '1725331539772'
+      sourceHandle: 'false'
+      target: '1725331527634'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: llm
+      id: 1725331539772-true-17253318139400-target
+      source: '1725331539772'
+      sourceHandle: 'true'
+      target: '17253318139400'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: answer
+      id: 17253318139400-source-17253315528350-target
+      source: '17253318139400'
+      sourceHandle: source
+      target: '17253315528350'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: llm
+      id: 1725331527634-source-17253319964310-target
+      source: '1725331527634'
+      sourceHandle: source
+      target: '17253319964310'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: answer
+      id: 17253319964310-source-1711528919501-target
+      source: '17253319964310'
+      sourceHandle: source
+      target: '1711528919501'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: Start
+        type: start
+        variables: []
+      height: 54
+      id: '1711528914102'
+      position:
+        x: 936.8087103376816
+        y: 115.1893942615801
+      positionAbsolute:
+        x: 936.8087103376816
+        y: 115.1893942615801
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        dataset_ids:
+        - 6084ed3f-d100-4df2-a277-b40d639ea7c6
+        desc: Allows you to query text content related to user questions from the
+          Knowledge
+        query_variable_selector:
+        - '1711528914102'
+        - sys.query
+        retrieval_mode: single
+        selected: false
+        single_retrieval_config:
+          model:
+            completion_params:
+              frequency_penalty: 0
+              max_tokens: 512
+              presence_penalty: 0
+              temperature: 0
+              top_p: 1
+            mode: chat
+            name: gpt-3.5-turbo
+            provider: openai
+        title: Knowledge Retrieval
+        type: knowledge-retrieval
+      dragging: false
+      height: 114
+      id: '1711528915811'
+      position:
+        x: 1267.1354148313565
+        y: 97.63825793246372
+      positionAbsolute:
+        x: 1267.1354148313565
+        y: 97.63825793246372
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1711528915811'
+          - result
+        desc: Invoking large language models to answer questions or process natural
+          language
+        memory:
+          query_prompt_template: ''
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: false
+            size: 50
+        model:
+          completion_params:
+            frequency_penalty: 0
+            max_tokens: 512
+            presence_penalty: 0
+            temperature: 0.7
+            top_p: 1
+          mode: chat
+          name: gpt-3.5-turbo
+          provider: openai
+        prompt_template:
+        - id: d831b880-d054-41ec-921e-4fb1f90b396c
+          role: system
+          text: '您是一名評分員，正在評估檢索到的文件是否與用戶的問題相關。
+
+            如果文件中包含與問題相關的關鍵詞或語義，則將其評為相關。
+
+            給予''是''或''否''的二元評分，以指示該文件是否與問題相關。'
+        - id: ffd3855b-5e50-416a-8e2f-cef49500bcfd
+          role: user
+          text: '文件與這個問題有關嗎？
+
+            如果文件中包含與問題相關的關鍵詞或語義，則將其評為相關。只能回答''是''或''否''。
+
+            問題:{{#sys.query#}}
+
+            文件:{{#context#}}'
+        selected: false
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 158
+      id: '1711528917469'
+      position:
+        x: 1544.8087103376813
+        y: 83.0123109915333
+      positionAbsolute:
+        x: 1544.8087103376813
+        y: 83.0123109915333
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1711528917469.text#}}'
+        desc: 使用網路上找的資料回答
+        selected: false
+        title: 回答
+        type: answer
+        variables: []
+      height: 135
+      id: '1711528919501'
+      position:
+        x: 1854
+        y: 521
+      positionAbsolute:
+        x: 1854
+        y: 521
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        provider_id: tavily
+        provider_name: tavily
+        provider_type: builtin
+        selected: false
+        title: TavilySearch
+        tool_configurations:
+          exclude_domains: null
+          include_answer: null
+          include_domains: null
+          include_images: null
+          include_raw_content: null
+          max_results: 5
+          search_depth: basic
+        tool_label: TavilySearch
+        tool_name: tavily_search
+        tool_parameters:
+          query:
+            type: mixed
+            value: '{{#sys.query#}}'
+        type: tool
+      height: 246
+      id: '1725331527634'
+      position:
+        x: 1246
+        y: 477
+      positionAbsolute:
+        x: 1246
+        y: 477
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: is
+            id: e5451197-fbba-46b4-ba8e-f43ccc8e51ba
+            value: 是
+            varType: string
+            variable_selector:
+            - sys
+            - query
+          id: 'true'
+          logical_operator: and
+        desc: 判定資料是否有關
+        selected: false
+        title: 條件分支
+        type: if-else
+      height: 154
+      id: '1725331539772'
+      position:
+        x: 942
+        y: 279
+      positionAbsolute:
+        x: 942
+        y: 279
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1711528917469.text#}}'
+        desc: 直接回答
+        selected: false
+        title: 回答
+        type: answer
+        variables: []
+      height: 135
+      id: '17253315528350'
+      position:
+        x: 1550
+        y: 279
+      positionAbsolute:
+        x: 1550
+        y: 279
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1711528915811'
+          - result
+        desc: Invoking large language models to answer questions or process natural
+          language
+        memory:
+          query_prompt_template: ''
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: false
+            size: 50
+        model:
+          completion_params:
+            frequency_penalty: 0
+            max_tokens: 512
+            presence_penalty: 0
+            temperature: 0.7
+            top_p: 1
+          mode: chat
+          name: gpt-3.5-turbo
+          provider: openai
+        prompt_template:
+        - id: d831b880-d054-41ec-921e-4fb1f90b396c
+          role: system
+          text: '"""
+
+            你是一位聊天機器人，你的工作是依照相關資料，解答用戶問題。
+
+            回復請使用繁體中文。
+
+            """'
+        - id: ffd3855b-5e50-416a-8e2f-cef49500bcfd
+          role: user
+          text: '​問題：{{#sys.query#}}
+
+            文件：{{#context#}}
+
+            請根據文件做回答。'
+        selected: false
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 158
+      id: '17253318139400'
+      position:
+        x: 1246
+        y: 279
+      positionAbsolute:
+        x: 1246
+        y: 279
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1725331527634'
+          - text
+        desc: Invoking large language models to answer questions or process natural
+          language
+        memory:
+          query_prompt_template: ''
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: false
+            size: 50
+        model:
+          completion_params:
+            frequency_penalty: 0
+            max_tokens: 512
+            presence_penalty: 0
+            temperature: 0.7
+            top_p: 1
+          mode: chat
+          name: gpt-3.5-turbo
+          provider: openai
+        prompt_template:
+        - id: d831b880-d054-41ec-921e-4fb1f90b396c
+          role: system
+          text: '"""
+
+            你是一位聊天機器人，你的工作是依照相關資料，解答用戶問題。
+
+            回復請使用繁體中文。
+
+            """'
+        - id: ffd3855b-5e50-416a-8e2f-cef49500bcfd
+          role: user
+          text: '​問題：{{#sys.query#}}
+
+            文件：{{#context#}}
+
+            請根據文件做回答。'
+        selected: true
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 158
+      id: '17253319964310'
+      position:
+        x: 1550
+        y: 509.5
+      positionAbsolute:
+        x: 1550
+        y: 509.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: -359.79867093101166
+      y: 86.22385960217727
+      zoom: 0.5199174917515597
