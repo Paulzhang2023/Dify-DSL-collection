@@ -1,12 +1,12 @@
 app:
-  description: 利用gemma2:9b做初始翻譯，再以deepseek-r1:7b做翻譯品質確認，最終再由gemma2:9b執行翻譯確認。
+  description: 利用gemma2:9b做初始翻译，再以deepseek-r1:7b做翻译质量审查，最終再由gemma2:9b执行翻译确认。
   icon: 🤖
   icon_background: '#FFEAD5'
   mode: workflow
-  name: WorkFlw_翻譯小幫手
+  name: WorkFlw_翻译小助手
   use_icon_as_answer_icon: false
 kind: app
-version: 0.1.5
+version: 0.1.6
 workflow:
   conversation_variables: []
   environment_variables: []
@@ -147,30 +147,30 @@ workflow:
     - data:
         desc: ''
         selected: false
-        title: 開始
+        title: 开始
         type: start
         variables:
-        - label: 來源語系
+        - label: 來源语言
           max_length: 48
           options:
-          - 繁體中文
+          - 简体中文
           - 英文
           - 日文
-          - 韓文
+          - 韩文
           required: true
           type: select
           variable: vSourceLan
-        - label: 目標語系
+        - label: 目标语言
           max_length: 48
           options:
           - 英文
           - 日文
-          - 韓文
-          - 繁體中文
+          - 韩文
+          - 简体中文
           required: true
           type: select
           variable: vTargetLan
-        - label: 內容領域
+        - label: 內容领域
           max_length: 48
           options: []
           required: true
@@ -182,7 +182,7 @@ workflow:
           required: true
           type: paragraph
           variable: vSourceText
-        - label: 初始翻譯
+        - label: 初始翻译
           max_length: 4960
           options: []
           required: false
@@ -236,7 +236,7 @@ workflow:
             \ to '{{#1737437138376.vTargetLan#}}', ensuring domain-specific accuracy\
             \ according to '{{#1737437138376.vDomain#}}'.\n</Task>"
         selected: false
-        title: 初始翻譯
+        title: 初始翻译
         type: llm
         variables: []
         vision:
@@ -295,7 +295,7 @@ workflow:
             \ suggestions for improvement where the translation is inappropriate.\n\
             </Task>"
         selected: false
-        title: 翻譯品質評核
+        title: 翻译质量审查
         type: llm
         variables: []
         vision:
@@ -354,7 +354,7 @@ workflow:
             \ guidance. Ensure the final result adheres to domain-specific accuracy\
             \ and is provided in '{{#1737437138376.vTargetLan#}}'.\n</Task>"
         selected: true
-        title: 翻譯優化
+        title: 翻译优化
         type: llm
         variables: []
         vision:
@@ -440,7 +440,7 @@ workflow:
         desc: ''
         output_type: string
         selected: false
-        title: 變量聚合器
+        title: 变量聚合器
         type: variable-aggregator
         variables:
         - - '1737437280488'
@@ -471,7 +471,7 @@ workflow:
             children: null
             type: string
         selected: false
-        title: 資料清洗(拿掉思考過程)
+        title: 资料清洗
         type: code
         variables:
         - value_selector:
