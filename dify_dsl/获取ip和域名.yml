@@ -3,7 +3,7 @@ app:
   icon: 🐝
   icon_background: '#FFEAD5'
   mode: workflow
-  name: bee
+  name: bee v2
   use_icon_as_answer_icon: false
 kind: app
 version: 0.1.5
