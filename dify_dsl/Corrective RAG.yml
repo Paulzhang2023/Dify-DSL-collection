@@ -1,5 +1,5 @@
 app:
-  description: CRAG
+  description: Corrective RAG (CRAG)
   icon: 🤖
   icon_background: '#FFEAD5'
   mode: advanced-chat
@@ -206,18 +206,18 @@ workflow:
         prompt_template:
         - id: d831b880-d054-41ec-921e-4fb1f90b396c
           role: system
-          text: '您是一名評分員，正在評估檢索到的文件是否與用戶的問題相關。
+          text: '您是一名评分员，正在评估检索到的文件是否与用户的问题相关。 
 
-            如果文件中包含與問題相關的關鍵詞或語義，則將其評為相關。
+如果文件中包含与问题相关的关键词或语义，则将其评为相关。 
 
-            給予''是''或''否''的二元評分，以指示該文件是否與問題相關。'
+给予''是''或''否''的二元评分，以指示该文件是否与问题相关。'
         - id: ffd3855b-5e50-416a-8e2f-cef49500bcfd
           role: user
-          text: '文件與這個問題有關嗎？
+          text: '文件与这个问题有关吗？ 
 
-            如果文件中包含與問題相關的關鍵詞或語義，則將其評為相關。只能回答''是''或''否''。
+如果文件中包含与问题相关的关键词或语义，则将其评为相关。只能回答''是''或''否''。 
 
-            問題:{{#sys.query#}}
+问题:{{#sys.query#}}
 
             文件:{{#context#}}'
         selected: false
@@ -241,7 +241,7 @@ workflow:
       width: 244
     - data:
         answer: '{{#1711528917469.text#}}'
-        desc: 使用網路上找的資料回答
+        desc: 使用网上找的资料进行回答
         selected: false
         title: 回答
         type: answer
@@ -307,9 +307,9 @@ workflow:
             - query
           id: 'true'
           logical_operator: and
-        desc: 判定資料是否有關
+        desc: 判定资料是否有关
         selected: false
-        title: 條件分支
+        title: 条件分支
         type: if-else
       height: 154
       id: '1725331539772'
@@ -375,18 +375,17 @@ workflow:
           role: system
           text: '"""
 
-            你是一位聊天機器人，你的工作是依照相關資料，解答用戶問題。
+            你是一位聊天机器人，你的工作是依照相关资料，解答用户问题。 
 
-            回復請使用繁體中文。
-
+回复请使用简体中文。
             """'
         - id: ffd3855b-5e50-416a-8e2f-cef49500bcfd
           role: user
-          text: '​問題：{{#sys.query#}}
+          text: '​问题：{{#sys.query#}}
 
             文件：{{#context#}}
 
-            請根據文件做回答。'
+            请根据文件做回答。'
         selected: false
         title: LLM
         type: llm
@@ -437,18 +436,18 @@ workflow:
           role: system
           text: '"""
 
-            你是一位聊天機器人，你的工作是依照相關資料，解答用戶問題。
+            你是一位聊天机器人，你的工作是依照相关资料，解答用户问题。
 
-            回復請使用繁體中文。
+            回复请使用简体中文。
 
             """'
         - id: ffd3855b-5e50-416a-8e2f-cef49500bcfd
           role: user
-          text: '​問題：{{#sys.query#}}
+          text: '​问题：{{#sys.query#}}
 
             文件：{{#context#}}
 
-            請根據文件做回答。'
+            请根据文件做回答。'
         selected: true
         title: LLM
         type: llm
