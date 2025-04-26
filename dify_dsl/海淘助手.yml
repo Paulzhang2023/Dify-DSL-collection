@@ -1,0 +1,231 @@
+app:
+  description: 自动生成淘宝&闲鱼商品详情
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: 海淘助手
+  use_icon_as_answer_icon: false
+kind: app
+version: 0.1.2
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - remote_url
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: llm
+      id: 1727071894926-source-1727071912058-target
+      source: '1727071894926'
+      sourceHandle: source
+      target: '1727071912058'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: end
+      id: 1727071912058-source-1727071969639-target
+      source: '1727071912058'
+      sourceHandle: source
+      target: '1727071969639'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: tool
+      id: 1727071221425-source-1727071894926-target
+      source: '1727071221425'
+      sourceHandle: source
+      target: '1727071894926'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: 输入产品名称，英文最好
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - label: product
+          max_length: 48
+          options: []
+          required: true
+          type: text-input
+          variable: product
+      height: 118
+      id: '1727071221425'
+      position:
+        x: 30
+        y: 285
+      positionAbsolute:
+        x: 30
+        y: 285
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: 通过GoogleAPI搜索产品
+        provider_id: searchapi
+        provider_name: searchapi
+        provider_type: builtin
+        selected: false
+        title: Google Search API
+        tool_configurations:
+          gl: US
+          hl: en
+          result_type: text
+        tool_label: Google Search API
+        tool_name: google_search_api
+        tool_parameters:
+          google_domain:
+            type: mixed
+            value: ''
+          num:
+            type: constant
+            value: 50
+          query:
+            type: mixed
+            value: '{{#1727071221425.product#}}'
+        type: tool
+      height: 170
+      id: '1727071894926'
+      position:
+        x: 334
+        y: 285
+      positionAbsolute:
+        x: 334
+        y: 285
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: deepseek-chat
+          provider: deepseek
+        prompt_template:
+        - id: ef8bfec4-f7ec-4fb8-80f8-1031795ed08c
+          role: system
+          text: '我现在要生成一个装备产品介绍详情，请参照一下Prompt制作，要是用中文生成：
+
+            ## 角色
+
+            你是一个户外领域的装备专家，擅长于总结户外装备产品的参数、实际测评以及性能对比。
+
+            ## 行动
+
+            请你帮我准确地生成介绍，特定名词可不用翻译，如产品名称不需要翻译。
+
+            ## 技能
+
+            - 出色的文字表达能力和总结能力
+
+            - 严谨的参数描述
+
+            - 喜欢对同类产品进行比较
+
+            ## 规则
+
+            输出格式为五段式，
+
+            - 第一段为标题，包含产品英文名称，有中文关键字
+
+            - 第二段为详细参数，如重量、尺寸、型号、颜色、材质等，特别注意的是产品参数要用公制描述
+
+            - 第三段为突出特性，逐条列举优势、突出特点等
+
+            - 第四段为概括总结，说明产品核功能和特点，给出推荐意见
+
+            - 第五段为关联品牌，列出同类产品的品牌名称
+
+            第一段只显示标题内容，其余各段落要有数字编号，数字编号格式采用“1-”模式
+
+            ## 限制
+
+            内容不超过2000字，避免政治敏感内容，不确定的部分不要瞎编'
+        - id: 9cf98c34-203c-4ddc-9856-862b23adceba
+          role: user
+          text: '{{#1727071894926.text#}}'
+        selected: true
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1727071912058'
+      position:
+        x: 638
+        y: 285
+      positionAbsolute:
+        x: 638
+        y: 285
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1727071912058'
+          - text
+          variable: output
+        selected: false
+        title: 结束
+        type: end
+      height: 90
+      id: '1727071969639'
+      position:
+        x: 942
+        y: 285
+      positionAbsolute:
+        x: 942
+        y: 285
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: 184
+      y: 21
+      zoom: 0.7

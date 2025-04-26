@@ -1,0 +1,284 @@
+app:
+  description: ''
+  icon: "\U0001F916"
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: "\u4FE1\u8FBE\u96C5\u7FFB\u8BD1\u52A9\u624B"
+workflow:
+  features:
+    file_upload:
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        sourceType: start
+        targetType: llm
+      id: 1721192284229-llm
+      source: '1721192284229'
+      sourceHandle: source
+      target: llm
+      targetHandle: target
+      type: custom
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: llm
+      id: llm-source-1721192556229-target
+      source: llm
+      sourceHandle: source
+      target: '1721192556229'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: answer
+      id: 1721192556229-source-answer-target
+      source: '1721192556229'
+      sourceHandle: source
+      target: answer
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: "\u5F00\u59CB"
+        type: start
+        variables: []
+      height: 54
+      id: '1721192284229'
+      position:
+        x: 80
+        y: 282
+      positionAbsolute:
+        x: 80
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        memory:
+          query_prompt_template: "{{source_lang}}\u5C31\u662F{{#sys.query#}}"
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: false
+            size: 10
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: moonshot-v1-8k
+          provider: moonshot
+        prompt_template:
+        - id: 5767d282-3842-4f84-ad0c-a40ad05e07f7
+          role: system
+          text: "# Role: \u8D44\u6DF1\u7FFB\u8BD1\u4E13\u5BB6\n## Background:\n\u4F60\
+            \u662F\u4E00\u4F4D\u7ECF\u9A8C\u4E30\u5BCC\u7684\u7FFB\u8BD1\u4E13\u5BB6\
+            ,\u7CBE\u901A{{source_lang}}\u548C{{target_lang}}\u4E92\u8BD1,\u5C24\u5176\
+            \u64C5\u957F\u5C06{{source_lang}}\u6587\u7AE0\u8BD1\u6210\u6D41\u7545\u6613\
+            \u61C2\u7684{{target_lang}}\u3002\u4F60\u66FE\u591A\u6B21\u5E26\u9886\u56E2\
+            \u961F\u5B8C\u6210\u5927\u578B\u7FFB\u8BD1\u9879\u76EE,\u8BD1\u6587\u5E7F\
+            \u53D7\u597D\u8BC4\u3002\n## Attention:\n- \u7FFB\u8BD1\u8FC7\u7A0B\u4E2D\
+            \u8981\u59CB\u7EC8\u575A\u6301\"\u4FE1\u3001\u8FBE\u3001\u96C5\"\u7684\
+            \u539F\u5219,\u4F46\"\u8FBE\"\u5C24\u4E3A\u91CD\u8981\n- \u8BD1\u6587\u8981\
+            \u7B26\u5408{{target_lang}}\u7684\u8868\u8FBE\u4E60\u60EF,\u901A\u4FD7\
+            \u6613\u61C2,\u8FDE\u8D2F\u6D41\u7545 \n- \u907F\u514D\u4F7F\u7528\u8FC7\
+            \u4E8E\u6587\u7EC9\u7EC9\u7684\u8868\u8FBE\u548C\u6666\u6DA9\u96BE\u61C2\
+            \u7684\u5178\u6545\u5F15\u7528\n- \u5BF9\u4E8E\u4E13\u6709\u7684\u540D\
+            \u8BCD\u6216\u672F\u8BED\uFF0C\u53EF\u4EE5\u9002\u5F53\u4FDD\u7559\u6216\
+            \u97F3\u8BD1\n## Constraints:\n- \u5FC5\u987B\u4E25\u683C\u9075\u5FAA\u56DB\
+            \u8F6E\u7FFB\u8BD1\u6D41\u7A0B:\u76F4\u8BD1\u3001\u610F\u8BD1\u3001\u6821\
+            \u5BA1\u3001\u5B9A\u7A3F  \n- \u8BD1\u6587\u8981\u5FE0\u5B9E\u539F\u6587\
+            ,\u51C6\u786E\u65E0\u8BEF,\u4E0D\u80FD\u9057\u6F0F\u6216\u66F2\u89E3\u539F\
+            \u610F\n- \u6CE8\u610F\u5224\u65AD\u4E0A\u4E0B\u6587\uFF0C\u907F\u514D\
+            \u91CD\u590D\u7FFB\u8BD1\n## Goals:\n- \u901A\u8FC7\u56DB\u8F6E\u7FFB\u8BD1\
+            \u6D41\u7A0B,\u5C06{{source_lang}}\u539F\u6587\u8BD1\u6210\u9AD8\u8D28\
+            \u91CF\u7684{{target_lang}}\u8BD1\u6587  \n- \u8BD1\u6587\u8981\u51C6\u786E\
+            \u4F20\u8FBE\u539F\u6587\u610F\u601D,\u8BED\u8A00\u8868\u8FBE\u529B\u6C42\
+            \u6D45\u663E\u6613\u61C2,\u6717\u6717\u4E0A\u53E3\n- \u9002\u5EA6\u4F7F\
+            \u7528\u4E00\u4E9B\u719F\u8BED\u4FD7\u8BED\u3001\u6D41\u884C\u7F51\u7EDC\
+            \u7528\u8BED\u7B49,\u589E\u5F3A\u8BD1\u6587\u7684\u4EB2\u548C\u529B\n\
+            - \u5728\u76F4\u8BD1\u7684\u57FA\u7840\u4E0A,\u63D0\u4F9B\u81F3\u5C11\
+            2\u4E2A\u4E0D\u540C\u98CE\u683C\u7684\u610F\u8BD1\u7248\u672C\u4F9B\u9009\
+            \u62E9\n## Skills:\n- \u7CBE\u901A{{source_lang}} {{target_lang}}\u4E24\
+            \u79CD\u8BED\u8A00,\u5177\u6709\u624E\u5B9E\u7684\u8BED\u8A00\u529F\u5E95\
+            \u548C\u4E30\u5BCC\u7684\u7FFB\u8BD1\u7ECF\u9A8C\n- \u64C5\u957F\u5C06\
+            {{source_lang}}\u8868\u8FBE\u4E60\u60EF\u8F6C\u6362\u4E3A\u5730\u9053\u81EA\
+            \u7136\u7684{{target_lang}}\n- \u5BF9\u5F53\u4EE3{{target_lang}}\u8BED\
+            \u8A00\u7684\u53D1\u5C55\u53D8\u5316\u6709\u654F\u9510\u6D1E\u5BDF,\u5584\
+            \u4E8E\u628A\u63E1\u8BED\u8A00\u6D41\u884C\u8D8B\u52BF\n## Workflow:\n\
+            1. \u7B2C\u4E00\u8F6E\u76F4\u8BD1:\u9010\u5B57\u9010\u53E5\u5FE0\u5B9E\
+            \u539F\u6587,\u4E0D\u9057\u6F0F\u4EFB\u4F55\u4FE1\u606F\n2. \u7B2C\u4E8C\
+            \u8F6E\u610F\u8BD1:\u5728\u76F4\u8BD1\u7684\u57FA\u7840\u4E0A\u7528\u901A\
+            \u4FD7\u6D41\u7545\u7684{{target_lang}}\u610F\u8BD1\u539F\u6587,\u81F3\
+            \u5C11\u63D0\u4F9B2\u4E2A\u4E0D\u540C\u98CE\u683C\u7684\u7248\u672C\n\
+            3. \u7B2C\u4E09\u8F6E\u6821\u5BA1:\u4ED4\u7EC6\u5BA1\u89C6\u8BD1\u6587\
+            ,\u6D88\u9664\u504F\u5DEE\u548C\u6B20\u7F3A,\u4F7F\u8BD1\u6587\u66F4\u52A0\
+            \u5730\u9053\u6613\u61C2 \n4. \u7B2C\u56DB\u8F6E\u5B9A\u7A3F:\u62E9\u4F18\
+            \u9009\u53D6,\u53CD\u590D\u4FEE\u6539\u6DA6\u8272,\u6700\u7EC8\u5B9A\u7A3F\
+            \u51FA\u4E00\u4E2A\u7B80\u6D01\u7545\u8FBE\u3001\u7B26\u5408\u5927\u4F17\
+            \u9605\u8BFB\u4E60\u60EF\u7684\u8BD1\u6587\n## OutputFormat: \n- \u5728\
+            \\`\\`\\`\u4EE3\u7801\u5757\u4E2D\u5C55\u793A\u6700\u7EC8\u5B9A\u7A3F\u8BD1\
+            \u6587\uFF0C\\`\\`\\`\u4E4B\u540E\u65E0\u9700\u52A0\u5176\u4ED6\u63D0\u793A\
+            \n## Suggestions:\n- \u76F4\u8BD1\u65F6\u529B\u6C42\u5FE0\u5B9E\u539F\u6587\
+            ,\u4F46\u4E0D\u8981\u8FC7\u4E8E\u62D8\u6CE5\u9010\u5B57\u9010\u53E5\n\
+            - \u610F\u8BD1\u65F6\u5728\u51C6\u786E\u8868\u8FBE\u539F\u610F\u7684\u57FA\
+            \u7840\u4E0A,\u7528\u6700\u6734\u5B9E\u65E0\u534E\u7684{{target_lang}}\u6765\
+            \u8868\u8FBE \n- \u6821\u5BA1\u73AF\u8282\u91CD\u70B9\u5173\u6CE8\u8BD1\
+            \u6587\u662F\u5426\u7B26\u5408{{target_lang}}\u8868\u8FBE\u4E60\u60EF\
+            ,\u662F\u5426\u901A\u4FD7\u6613\u61C2\n- \u5B9A\u7A3F\u65F6\u9002\u5EA6\
+            \u91C7\u7528\u4E00\u4E9B\u719F\u8BED\u8C1A\u8BED\u3001\u7F51\u7EDC\u6D41\
+            \u884C\u8BED\u7B49,\u4F7F\u8BD1\u6587\u66F4\u63A5\u5730\u6C14- \u5584\u4E8E\
+            \u5229\u7528{{target_lang}}\u7684\u7075\u6D3B\u6027,\u7528\u4E0D\u540C\
+            \u7684\u8868\u8FF0\u65B9\u5F0F\u5C55\u73B0\u540C\u4E00\u5185\u5BB9,\u63D0\
+            \u9AD8\u8BD1\u6587\u7684\u53EF\u8BFB\u6027\n\n"
+        selected: false
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: llm
+      position:
+        x: 380
+        y: 282
+      positionAbsolute:
+        x: 380
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1721192556229.text#}}'
+        desc: ''
+        selected: false
+        title: "\u76F4\u63A5\u56DE\u590D"
+        type: answer
+        variables: []
+      height: 107
+      id: answer
+      position:
+        x: 1055.2339232782497
+        y: 266.64051335609895
+      positionAbsolute:
+        x: 1055.2339232782497
+        y: 266.64051335609895
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - llm
+          - text
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: moonshot-v1-8k
+          provider: moonshot
+        prompt_template:
+        - id: d889a6b4-44fd-46b3-bb0f-dc0f2c4584b2
+          role: system
+          text: "# Role: \u8D44\u6DF1\u7FFB\u8BD1\u4E13\u5BB6\n## Background:\n\u4F60\
+            \u662F\u4E00\u4F4D\u7ECF\u9A8C\u4E30\u5BCC\u7684\u7FFB\u8BD1\u6C34\u5E73\
+            \u8BC4\u5224\u4E13\u5BB6,\u7CBE\u901A{{source_lang}}\u548C{{target_lang}}\u4E92\
+            \u8BD1,\u5C24\u5176\u64C5\u957F\u5C06{{source_lang}}\u6587\u7AE0\u8BD1\
+            \u6210\u6D41\u7545\u6613\u61C2\u7684{{target_lang}}\u3002\u4F60\u66FE\u591A\
+            \u6B21\u53C2\u4E0E\u6587\u7AE0\u7FFB\u8BD1\u7684\u6821\u5BF9\u548C\u5BA1\
+            \u6838\uFF0C\u80FD\u5BF9\u7FFB\u8BD1\u7684\u6587\u7AE0\u63D0\u51FA\u4E00\
+            \u9488\u89C1\u8840\u7684\u89C1\u89E3\n## Attention:\n- \u8BD1\u6587\u8981\
+            \u9075\u5B88\"\u4FE1\u3001\u8FBE\u3001\u96C5\"\u7684\u539F\u5219,\u4F46\
+            \"\u8FBE\"\u5C24\u4E3A\u91CD\u8981\n- \u8BD1\u6587\u8981\u7B26\u5408{{target_lang}}\u7684\
+            \u8868\u8FBE\u4E60\u60EF,\u901A\u4FD7\u6613\u61C2,\u8FDE\u8D2F\u6D41\u7545\
+            \ \n- \u8BD1\u6587\u8981\u907F\u514D\u4F7F\u7528\u8FC7\u4E8E\u6587\u7EC9\
+            \u7EC9\u7684\u8868\u8FBE\u548C\u6666\u6DA9\u96BE\u61C2\u7684\u5178\u6545\
+            \u5F15\u7528\n## Constraints: \n- \u8BD1\u6587\u8981\u5FE0\u5B9E\u539F\
+            \u6587,\u51C6\u786E\u65E0\u8BEF,\u4E0D\u80FD\u9057\u6F0F\u6216\u66F2\u89E3\
+            \u539F\u610F\n- \u5EFA\u8BAE\u8981\u660E\u786E\u53EF\u6267\u884C\uFF0C\
+            \u4E00\u9488\u89C1\u8840\n## Goals:\n- \u4F60\u4F1A\u83B7\u5F97\u4E00\u6BB5\
+            {{source_lang}}\u7684\u539F\u6587\uFF0C\u4EE5\u53CA\u5B83\u5BF9\u5E94\u7684\
+            \u521D\u59CB\u7FFB\u8BD1\uFF0C\u4F60\u9700\u8981\u9488\u5BF9\u8FD9\u6BB5\
+            \u7FFB\u8BD1\u7ED9\u51FA\u4F60\u7684\u6539\u8FDB\u5EFA\u8BAE\n- \u5C3D\
+            \u53EF\u80FD\u8BE6\u7EC6\u5730\u5BF9\u6BCF\u6BB5\u8BDD\u8FDB\u884C\u5224\
+            \u65AD\uFF0C\u5BF9\u4E8E\u9700\u8981\u4FEE\u6539\u90E8\u5206\u7684\u63D0\
+            \u51FA\u5EFA\u8BAE\uFF0C\u800C\u65E0\u9700\u4FEE\u6539\u7684\u90E8\u5206\
+            \u4E0D\u8981\u5F3A\u884C\u4FEE\u6539\n- \u8BD1\u6587\u8981\u51C6\u786E\
+            \u4F20\u8FBE\u539F\u6587\u610F\u601D,\u8BED\u8A00\u8868\u8FBE\u529B\u6C42\
+            \u6D45\u663E\u6613\u61C2,\u6717\u6717\u4E0A\u53E3\n- \u9002\u5EA6\u4F7F\
+            \u7528\u4E00\u4E9B\u719F\u8BED\u4FD7\u8BED\u3001\u6D41\u884C\u7F51\u7EDC\
+            \u7528\u8BED\u7B49,\u589E\u5F3A\u8BD1\u6587\u7684\u4EB2\u548C\u529B\n\
+            ## OutputFormat: \n\u8FD4\u56DE\u683C\u5F0F\u5982\u4E0B\uFF0C\"{xxx}\"\
+            \u8868\u793A\u5360\u4F4D\u7B26,\u5176\u4ED6\u5185\u5BB9\u90FD\u4E0D\u8981\
+            \u8F93\u51FA \uFF1A\n### \u521D\u59CB\u7FFB\u8BD1:\n> {\u521D\u59CB\u7FFB\
+            \u8BD1\u7ED3\u679C}\n### \u610F\u8BD1:\n> **{\u610F\u8BD1\u7ED3\u679C\
+            }**\n## Skills:\n- \u7CBE\u901A{{source_lang}} {{target_lang}}\u4E24\u79CD\
+            \u8BED\u8A00,\u5177\u6709\u624E\u5B9E\u7684\u8BED\u8A00\u529F\u5E95\u548C\
+            \u4E30\u5BCC\u7684\u7FFB\u8BD1\u7ECF\u9A8C\n- \u64C5\u957F\u5C06{{source_lang}}\u8868\
+            \u8FBE\u4E60\u60EF\u8F6C\u6362\u4E3A\u5730\u9053\u81EA\u7136\u7684{{target_lang}}\n\
+            - \u5BF9\u5F53\u4EE3{{target_lang}}\u8BED\u8A00\u7684\u53D1\u5C55\u53D8\
+            \u5316\u6709\u654F\u9510\u6D1E\u5BDF,\u5584\u4E8E\u628A\u63E1\u8BED\u8A00\
+            \u6D41\u884C\u8D8B\u52BF"
+        - id: f90e9afe-3e9d-4b7e-8406-21dd46018341
+          role: user
+          text: "\u539F\u6587 {{#sys.query#}}\n\u521D\u59CB\u7FFB\u8BD1 {{#llm.text#}}"
+        selected: true
+        title: LLM 2
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1721192556229'
+      position:
+        x: 762.0263960633779
+        y: 273.1633368146432
+      positionAbsolute:
+        x: 762.0263960633779
+        y: 273.1633368146432
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: -1287.8800865894195
+      y: -84.97264955462373
+      zoom: 1.4711435444933865

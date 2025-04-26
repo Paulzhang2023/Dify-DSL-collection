@@ -1,0 +1,929 @@
+app:
+  description: 生成AIはChat GPT4oとPerplexityを搭載。添付ファイル可能。添付がない場合はPerplexity検索で最新情報が取得できる。
+  icon: 🐦
+  icon_background: '#FEF7C3'
+  mode: advanced-chat
+  name: シンGaie生成AIアプリ
+  use_icon_as_answer_icon: false
+kind: app
+version: 0.1.4
+workflow:
+  conversation_variables:
+  - description: ''
+    id: 195ea74a-282d-4264-bc97-2ad63bde6f1a
+    name: PREV_ANSWER
+    selector:
+    - conversation
+    - PREV_ANSWER
+    value: ''
+    value_type: string
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions: []
+      allowed_file_types:
+      - image
+      - document
+      - audio
+      allowed_file_upload_methods:
+      - remote_url
+      - local_file
+      enabled: true
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 5
+    opening_statement: 'こんにちは、添付できるファイル例です。
+
+      1. **画像ファイル**: JPEG、PNG、GIFなど
+
+      2. **ドキュメントファイル**: PDF、DOCX、TXTなど
+
+      3. **スプレッドシート**: XLSX、CSVなど
+
+      4. **プレゼンテーション**: PPTXなど
+
+      5. **音声ファイル**: MP3、WAVなど'
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: true
+        iteration_id: '1733537328629'
+        sourceType: iteration-start
+        targetType: if-else
+      id: 1733537328629start-source-1733537432163-target
+      source: 1733537328629start
+      sourceHandle: source
+      target: '1733537432163'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: true
+        iteration_id: '1733537328629'
+        sourceType: if-else
+        targetType: llm
+      id: 1733537432163-true-1733544710413-target
+      source: '1733537432163'
+      sourceHandle: 'true'
+      target: '1733544710413'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: true
+        iteration_id: '1733537328629'
+        sourceType: if-else
+        targetType: document-extractor
+      id: 1733537432163-7c5249ec-d317-498f-9888-b9b1011367bd-1733544780728-target
+      source: '1733537432163'
+      sourceHandle: 7c5249ec-d317-498f-9888-b9b1011367bd
+      target: '1733544780728'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: true
+        iteration_id: '1733537328629'
+        sourceType: if-else
+        targetType: llm
+      id: 1733537432163-1e6b924d-4fb5-4e26-b8d0-3fe195fc436c-1733544813815-target
+      source: '1733537432163'
+      sourceHandle: 1e6b924d-4fb5-4e26-b8d0-3fe195fc436c
+      target: '1733544813815'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: true
+        iteration_id: '1733537328629'
+        sourceType: if-else
+        targetType: template-transform
+      id: 1733537432163-false-1733544871898-target
+      source: '1733537432163'
+      sourceHandle: 'false'
+      target: '1733544871898'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: true
+        iteration_id: '1733537328629'
+        sourceType: llm
+        targetType: variable-aggregator
+      id: 1733544710413-source-1733545263696-target
+      source: '1733544710413'
+      sourceHandle: source
+      target: '1733545263696'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: true
+        iteration_id: '1733537328629'
+        sourceType: template-transform
+        targetType: variable-aggregator
+      id: 1733544871898-source-1733545263696-target
+      source: '1733544871898'
+      sourceHandle: source
+      target: '1733545263696'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: false
+        sourceType: iteration
+        targetType: code
+      id: 1733537328629-source-1733607020747-target
+      source: '1733537328629'
+      sourceHandle: source
+      target: '1733607020747'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: answer
+      id: 1733607020747-source-answer-target
+      source: '1733607020747'
+      sourceHandle: source
+      target: answer
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: true
+        iteration_id: '1733537328629'
+        sourceType: document-extractor
+        targetType: llm
+      id: 1733544780728-source-1733644802346-target
+      source: '1733544780728'
+      sourceHandle: source
+      target: '1733644802346'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: true
+        iteration_id: '1733537328629'
+        sourceType: llm
+        targetType: variable-aggregator
+      id: 1733644802346-source-1733545263696-target
+      source: '1733644802346'
+      sourceHandle: source
+      target: '1733545263696'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: true
+        iteration_id: '1733537328629'
+        sourceType: llm
+        targetType: variable-aggregator
+      id: 1733544813815-source-1733545263696-target
+      source: '1733544813815'
+      sourceHandle: source
+      target: '1733545263696'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: if-else
+      id: 1733537296277-source-1733720815740-target
+      source: '1733537296277'
+      sourceHandle: source
+      target: '1733720815740'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: iteration
+      id: 1733720815740-true-1733537328629-target
+      source: '1733720815740'
+      sourceHandle: 'true'
+      target: '1733537328629'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: answer
+      id: 1733720914504-source-1733721025023-target
+      source: '1733720914504'
+      sourceHandle: source
+      target: '1733721025023'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: llm
+      id: 1734492531219-source-1733720914504-target
+      source: '1734492531219'
+      sourceHandle: source
+      target: '1733720914504'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: answer
+        targetType: assigner
+      id: answer-source-1734612901593-target
+      source: answer
+      sourceHandle: source
+      target: '1734612901593'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: template-transform
+      id: 1733720815740-false-1734612958592-target
+      source: '1733720815740'
+      sourceHandle: 'false'
+      target: '1734612958592'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: template-transform
+        targetType: tool
+      id: 1734612958592-source-1734492531219-target
+      source: '1734612958592'
+      sourceHandle: source
+      target: '1734492531219'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 開始
+        type: start
+        variables: []
+      height: 54
+      id: '1733537296277'
+      position:
+        x: -789.0752490705843
+        y: 408.295930194609
+      positionAbsolute:
+        x: -789.0752490705843
+        y: 408.295930194609
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1733607020747.result#}}'
+        desc: ''
+        selected: false
+        title: 回答
+        type: answer
+        variables: []
+      height: 103
+      id: answer
+      position:
+        x: 1471.909483526533
+        y: 491.27708681523916
+      positionAbsolute:
+        x: 1471.909483526533
+        y: 491.27708681523916
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        error_handle_mode: terminated
+        height: 663
+        is_parallel: true
+        iterator_selector:
+        - sys
+        - files
+        output_selector:
+        - '1733545263696'
+        - output
+        output_type: array[string]
+        parallel_nums: 10
+        selected: false
+        start_node_id: 1733537328629start
+        title: イテレーション
+        type: iteration
+        width: 1264
+      height: 663
+      id: '1733537328629'
+      position:
+        x: -79.46361676779065
+        y: 60.87486490508468
+      positionAbsolute:
+        x: -79.46361676779065
+        y: 60.87486490508468
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 1264
+      zIndex: 1
+    - data:
+        desc: ''
+        isInIteration: true
+        selected: false
+        title: ''
+        type: iteration-start
+      draggable: false
+      height: 48
+      id: 1733537328629start
+      parentId: '1733537328629'
+      position:
+        x: 24
+        y: 68
+      positionAbsolute:
+        x: -55.463616767790654
+        y: 128.87486490508468
+      selectable: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-iteration-start
+      width: 44
+      zIndex: 1002
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: in
+            id: e0365f62-ed24-424a-ac2c-2157f6276ae9
+            value:
+            - image
+            varType: string
+            variable_selector:
+            - '1733537328629'
+            - item
+            - type
+          id: 'true'
+          logical_operator: and
+        - case_id: 7c5249ec-d317-498f-9888-b9b1011367bd
+          conditions:
+          - comparison_operator: in
+            id: 9de9c7be-c908-4011-8d62-a3194e307dd6
+            value:
+            - document
+            varType: string
+            variable_selector:
+            - '1733537328629'
+            - item
+            - type
+          id: 7c5249ec-d317-498f-9888-b9b1011367bd
+          logical_operator: and
+        - case_id: 1e6b924d-4fb5-4e26-b8d0-3fe195fc436c
+          conditions:
+          - comparison_operator: in
+            id: c84e8c40-1f91-441f-9fa2-cd4c404e578f
+            value:
+            - audio
+            varType: string
+            variable_selector:
+            - '1733537328629'
+            - item
+            - type
+          id: 1e6b924d-4fb5-4e26-b8d0-3fe195fc436c
+          logical_operator: and
+        desc: ''
+        isInIteration: true
+        iteration_id: '1733537328629'
+        selected: false
+        title: IF/ELSE
+        type: if-else
+      height: 222
+      id: '1733537432163'
+      parentId: '1733537328629'
+      position:
+        x: 128
+        y: 67.13185977239891
+      positionAbsolute:
+        x: 48.536383232209346
+        y: 128.0067246774836
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1002
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        isInIteration: true
+        iteration_id: '1733537328629'
+        memory:
+          query_prompt_template: '{{#sys.query#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: true
+            size: 30
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gpt-4o-2024-11-20
+          provider: openai
+        prompt_template:
+        - id: 5ea0f154-bd13-41d6-bcc2-b5b9fd414f68
+          role: system
+          text: ''
+        selected: false
+        title: LLM画像
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+            variable_selector:
+            - sys
+            - files
+          enabled: true
+      height: 98
+      id: '1733544710413'
+      parentId: '1733537328629'
+      position:
+        x: 432
+        y: 68
+      positionAbsolute:
+        x: 352.53638323220935
+        y: 128.87486490508468
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1002
+    - data:
+        desc: ''
+        isInIteration: true
+        is_array_file: false
+        iteration_id: '1733537328629'
+        selected: false
+        title: テキスト抽出ツール
+        type: document-extractor
+        variable_selector:
+        - '1733537328629'
+        - item
+      height: 92
+      id: '1733544780728'
+      parentId: '1733537328629'
+      position:
+        x: 432
+        y: 205
+      positionAbsolute:
+        x: 352.53638323220935
+        y: 265.8748649050847
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1002
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        isInIteration: true
+        iteration_id: '1733537328629'
+        memory:
+          query_prompt_template: '{{#sys.query#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: true
+            size: 30
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gpt-4o-audio-preview
+          provider: openai
+        prompt_template:
+        - id: 5fd8e3e3-71f3-428a-9280-2aca739326e9
+          role: system
+          text: '
+
+
+            '
+        - id: 406e2501-d4f8-485c-bb3f-b112fb6b568a
+          role: user
+          text: '下記の音声の内容を全て文字起こししてください。
+
+            出力は、文字起こしした文章だけ出力してください。
+
+            {{#1733537328629.item#}}'
+        selected: false
+        title: LLM 音声
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1733544813815'
+      parentId: '1733537328629'
+      position:
+        x: 432
+        y: 336
+      positionAbsolute:
+        x: 352.53638323220935
+        y: 396.8748649050847
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1002
+    - data:
+        desc: ''
+        isInIteration: true
+        iteration_id: '1733537328629'
+        selected: false
+        template: '申し訳ございません。
+
+          そのファイル形式はサポートしておりません。'
+        title: その他ファイル形式の処理
+        type: template-transform
+        variables: []
+      height: 54
+      id: '1733544871898'
+      parentId: '1733537328629'
+      position:
+        x: 432
+        y: 473
+      positionAbsolute:
+        x: 352.53638323220935
+        y: 533.8748649050847
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1002
+    - data:
+        desc: ''
+        isInIteration: true
+        iteration_id: '1733537328629'
+        output_type: string
+        selected: false
+        title: 変数集約器
+        type: variable-aggregator
+        variables:
+        - - '1733544710413'
+          - text
+        - - '1733644802346'
+          - text
+        - - '1733544813815'
+          - text
+        - - '1733544871898'
+          - output
+      height: 175
+      id: '1733545263696'
+      parentId: '1733537328629'
+      position:
+        x: 1003.2274535240638
+        y: 76.4387616902336
+      positionAbsolute:
+        x: 923.7638367562731
+        y: 137.31362659531828
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1002
+    - data:
+        code: "def main(transcripts: list[str]) -> dict:\n    formatted_string = \"\
+          \\n===\\n\".join(transcripts)\n    return {'result': formatted_string}"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: コード
+        type: code
+        variables:
+        - value_selector:
+          - '1733537328629'
+          - output
+          variable: transcripts
+      height: 54
+      id: '1733607020747'
+      position:
+        x: 1249.168053711413
+        y: 257.8046800521099
+      positionAbsolute:
+        x: 1249.168053711413
+        y: 257.8046800521099
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1733544780728'
+          - text
+        desc: ''
+        isInIteration: true
+        iteration_id: '1733537328629'
+        memory:
+          query_prompt_template: '続けて質問があったら回答してください。
+
+            {{#sys.query#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: true
+            size: 20
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gpt-4o
+          provider: openai
+        prompt_template:
+        - id: 028afcdf-06c5-45ef-8ff0-4a1dc836338e
+          role: system
+          text: '{{#context#}}'
+        selected: false
+        title: LLM ドキュメント
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1733644802346'
+      parentId: '1733537328629'
+      position:
+        x: 707.8707943658881
+        y: 145.92866816836488
+      positionAbsolute:
+        x: 628.4071775980974
+        y: 206.80353307344956
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1002
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: not empty
+            id: b7beb440-389b-4f80-9a11-f5690305ff25
+            value: ''
+            varType: array[file]
+            variable_selector:
+            - sys
+            - files
+          id: 'true'
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: IF/ELSE 2
+        type: if-else
+      height: 126
+      id: '1733720815740'
+      position:
+        x: -469.28012110079754
+        y: 408.295930194609
+      positionAbsolute:
+        x: -469.28012110079754
+        y: 408.295930194609
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        memory:
+          query_prompt_template: '以下のユーザーの質問について、必ず、以下の参考情報に基
+
+            づいて回答してください。
+
+
+            ## ユーザーの質問
+
+            {{#sys.query#}}
+
+            ## 参考情報
+
+            {{#1734492531219.text#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: true
+            size: 20
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gpt-4o
+          provider: openai
+        prompt_template:
+        - id: 28a24448-6f52-4975-9232-d6fbb9385b8a
+          role: system
+          text: あなたはプロのリサーチャーであり、優秀なライターです。ユーザーの質問に対して完璧なリサーチを行い回答してください。
+        selected: false
+        title: LLM 添付がない質問
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1733720914504'
+      position:
+        x: 360.8618422427402
+        y: 935.1028618709047
+      positionAbsolute:
+        x: 360.8618422427402
+        y: 935.1028618709047
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1733720914504.text#}}'
+        desc: ''
+        selected: false
+        title: 回答 2
+        type: answer
+        variables: []
+      height: 103
+      id: '1733721025023'
+      position:
+        x: 804.6243151166486
+        y: 930.2690141362923
+      positionAbsolute:
+        x: 804.6243151166486
+        y: 930.2690141362923
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        provider_id: perplexity
+        provider_name: perplexity
+        provider_type: builtin
+        selected: false
+        title: Perplexity Search
+        tool_configurations:
+          frequency_penalty: 1
+          max_tokens: 4096
+          model: llama-3.1-sonar-large-128k-online
+          presence_penalty: 0
+          return_citations: 1
+          search_domain_filter: ''
+          search_recency_filter: month
+          temperature: 0.7
+          top_k: 5
+          top_p: 1
+        tool_label: Perplexity Search
+        tool_name: perplexity
+        tool_parameters:
+          query:
+            type: mixed
+            value: '{{#1734612958592.output#}}'
+        type: tool
+      height: 324
+      id: '1734492531219'
+      position:
+        x: -34.44015878533901
+        y: 930.2690141362923
+      positionAbsolute:
+        x: -34.44015878533901
+        y: 930.2690141362923
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        items:
+        - input_type: variable
+          operation: over-write
+          value:
+          - '1733607020747'
+          - result
+          variable_selector:
+          - conversation
+          - PREV_ANSWER
+          write_mode: over-write
+        selected: false
+        title: 変数代入
+        type: assigner
+        version: '2'
+      height: 88
+      id: '1734612901593'
+      position:
+        x: 1775.909483526533
+        y: 491.27708681523916
+      positionAbsolute:
+        x: 1775.909483526533
+        y: 491.27708681523916
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        selected: false
+        template: '過去のやり取りも踏まえて回答して下さい。
+
+
+          ## 質問
+
+          {{ query }}
+
+
+          ## 過去のやり取り
+
+          {{ PREV_ANSWER }}'
+        title: テンプレート 2
+        type: template-transform
+        variables:
+        - value_selector:
+          - conversation
+          - PREV_ANSWER
+          variable: PREV_ANSWER
+        - value_selector:
+          - sys
+          - query
+          variable: query
+      height: 54
+      id: '1734612958592'
+      position:
+        x: -315.15107795671554
+        y: 774.3718142313736
+      positionAbsolute:
+        x: -315.15107795671554
+        y: 774.3718142313736
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: 644.064573637846
+      y: -33.84842121929063
+      zoom: 0.8026568261234894

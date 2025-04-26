@@ -1,0 +1,528 @@
+app:
+  description: 利用Whisper Asr Werserver將語音轉成文字稿，可做為會議記使用。
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: Speech To Text
+  use_icon_as_answer_icon: false
+dependencies: []
+kind: app
+version: 0.1.5
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: end
+      id: 1741046462938-fail-branch-1740993727878-target
+      selected: false
+      source: '1741046462938'
+      sourceHandle: fail-branch
+      target: '1740993727878'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: tool
+      id: 1740993487661-source-1741046462938-target
+      source: '1740993487661'
+      sourceHandle: source
+      target: '1741046462938'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: code
+      id: 1741046462938-source-1741055571945-target
+      selected: false
+      source: '1741046462938'
+      sourceHandle: source
+      target: '1741055571945'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: template-transform
+      id: 1741055571945-source-1741060315615-target
+      source: '1741055571945'
+      sourceHandle: source
+      target: '1741060315615'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: template-transform
+        targetType: end
+      id: 1741060315615-source-1741060343430-target
+      source: '1741060315615'
+      sourceHandle: source
+      target: '1741060343430'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 開始
+        type: start
+        variables:
+        - allowed_file_extensions: []
+          allowed_file_types:
+          - audio
+          allowed_file_upload_methods:
+          - local_file
+          label: 語音檔案
+          max_length: 48
+          options: []
+          required: true
+          type: file
+          variable: vVoice
+        - label: 輸出類型
+          max_length: 48
+          options:
+          - Text
+          - 'Subtitle '
+          required: true
+          type: select
+          variable: vOutputType
+      height: 116
+      id: '1740993487661'
+      position:
+        x: -225
+        y: 235
+      positionAbsolute:
+        x: -225
+        y: 235
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1740993516367'
+          - error_message
+          variable: error_message
+        - value_selector:
+          - '1740993516367'
+          - error_type
+          variable: error_type
+        selected: false
+        title: 執行異常
+        type: end
+      height: 116
+      id: '1740993727878'
+      position:
+        x: 1288
+        y: 411
+      positionAbsolute:
+        x: 1288
+        y: 411
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        error_strategy: fail-branch
+        is_team_authorization: true
+        output_schema: null
+        paramSchemas:
+        - auto_generate: null
+          default: 1
+          form: llm
+          human_description:
+            en_US: Encode audio first through ffmpeg
+            ja_JP: Encode audio first through ffmpeg
+            pt_BR: Encode audio first through ffmpeg
+            zh_Hans: Encode audio first through ffmpeg
+          label:
+            en_US: encode
+            ja_JP: encode
+            pt_BR: encode
+            zh_Hans: encode
+          llm_description: Encode audio first through ffmpeg
+          max: null
+          min: null
+          name: encode
+          options: []
+          placeholder:
+            en_US: Encode audio first through ffmpeg
+            ja_JP: Encode audio first through ffmpeg
+            pt_BR: Encode audio first through ffmpeg
+            zh_Hans: Encode audio first through ffmpeg
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: boolean
+        - auto_generate: null
+          default: transcribe
+          form: llm
+          human_description:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          label:
+            en_US: task
+            ja_JP: task
+            pt_BR: task
+            zh_Hans: task
+          llm_description: null
+          max: null
+          min: null
+          name: task
+          options: []
+          placeholder:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          label:
+            en_US: language
+            ja_JP: language
+            pt_BR: language
+            zh_Hans: language
+          llm_description: null
+          max: null
+          min: null
+          name: language
+          options: []
+          placeholder:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          label:
+            en_US: initial_prompt
+            ja_JP: initial_prompt
+            pt_BR: initial_prompt
+            zh_Hans: initial_prompt
+          llm_description: null
+          max: null
+          min: null
+          name: initial_prompt
+          options: []
+          placeholder:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: 0
+          form: llm
+          human_description:
+            en_US: Word level timestamps
+            ja_JP: Word level timestamps
+            pt_BR: Word level timestamps
+            zh_Hans: Word level timestamps
+          label:
+            en_US: word_timestamps
+            ja_JP: word_timestamps
+            pt_BR: word_timestamps
+            zh_Hans: word_timestamps
+          llm_description: Word level timestamps
+          max: null
+          min: null
+          name: word_timestamps
+          options: []
+          placeholder:
+            en_US: Word level timestamps
+            ja_JP: Word level timestamps
+            pt_BR: Word level timestamps
+            zh_Hans: Word level timestamps
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: boolean
+        - auto_generate: null
+          default: txt
+          form: llm
+          human_description:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          label:
+            en_US: output
+            ja_JP: output
+            pt_BR: output
+            zh_Hans: output
+          llm_description: null
+          max: null
+          min: null
+          name: output
+          options: []
+          placeholder:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          label:
+            en_US: audio_file
+            ja_JP: audio_file
+            pt_BR: audio_file
+            zh_Hans: audio_file
+          llm_description: ''
+          max: null
+          min: null
+          name: audio_file
+          options: []
+          placeholder:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: file
+        params:
+          audio_file: ''
+          encode: ''
+          initial_prompt: ''
+          language: ''
+          output: ''
+          task: ''
+          word_timestamps: ''
+        provider_id: c4d91428-f174-4f06-acf1-35cf414a1914
+        provider_name: Whisper Asr WebService
+        provider_type: api
+        selected: false
+        title: asr_asr_post
+        tool_configurations: {}
+        tool_label: asr_asr_post
+        tool_name: asr_asr_post
+        tool_parameters:
+          audio_file:
+            type: variable
+            value:
+            - '1740993487661'
+            - vVoice
+          encode:
+            type: mixed
+            value: 'true'
+          initial_prompt:
+            type: mixed
+            value: response in Chinese Traditional
+          language:
+            type: mixed
+            value: zh
+          output:
+            type: mixed
+            value: json
+          task:
+            type: mixed
+            value: transcribe
+          word_timestamps:
+            type: mixed
+            value: 'false'
+        type: tool
+      height: 90
+      id: '1741046462938'
+      position:
+        x: 290.0488397219866
+        y: 271.94087074004545
+      positionAbsolute:
+        x: 290.0488397219866
+        y: 271.94087074004545
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "import json\n\ndef main(asr_output: str, parser_type: str) -> dict:\n\
+          \    data = json.loads(asr_output)\n    if parser_type == 'Text':\n    \
+          \    return {\n            'result': data['text']\n        }\n    else:\n\
+          \        subtitle = ''\n        for segment in data['segments']:\n     \
+          \       subtitle += f'{segment[\"id\"]}\\n'\n            subtitle += f'{segment[\"\
+          start\"]} --> {segment[\"end\"]}\\n'\n            subtitle += f'{segment[\"\
+          text\"]}\\n\\n'\n        return {\n            'result': subtitle\n    \
+          \    }\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: parser json
+        type: code
+        variables:
+        - value_selector:
+          - '1741046462938'
+          - text
+          variable: asr_output
+        - value_selector:
+          - '1740993487661'
+          - vOutputType
+          variable: parser_type
+      height: 54
+      id: '1741055571945'
+      position:
+        x: 769.6625638734795
+        y: 18.894902834529248
+      positionAbsolute:
+        x: 769.6625638734795
+        y: 18.894902834529248
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        selected: false
+        template: '{{ results }}'
+        title: 模板轉換
+        type: template-transform
+        variables:
+        - value_selector:
+          - '1741055571945'
+          - result
+          variable: results
+      height: 54
+      id: '1741060315615'
+      position:
+        x: 1147.5550068767616
+        y: 18.894902834529248
+      positionAbsolute:
+        x: 1147.5550068767616
+        y: 18.894902834529248
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1741060315615'
+          - output
+          variable: output
+        selected: false
+        title: 執行結束
+        type: end
+      height: 90
+      id: '1741060343430'
+      position:
+        x: 1497.7377837538131
+        y: 18.894902834529248
+      positionAbsolute:
+        x: 1497.7377837538131
+        y: 18.894902834529248
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: 235.4683038807541
+      y: 350.0767186290659
+      zoom: 0.7578582832551992

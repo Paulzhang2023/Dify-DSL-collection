@@ -1,0 +1,231 @@
+app:
+  description: '根据用户请求，对特定领域数据进行查询
+
+    '
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: 数据检索
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/tongyi:0.0.18@ca40ec06ff35ca611fa5fdf99a15eeb007a9fe3bd725c9ff6d0436469ab0edc9
+kind: app
+version: 0.1.5
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        sourceType: start
+        targetType: llm
+      id: 1745239074491-llm
+      source: '1745239074491'
+      sourceHandle: source
+      target: llm
+      targetHandle: target
+      type: custom
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: answer
+      id: 17452390930000-source-answer-target
+      source: '17452390930000'
+      sourceHandle: source
+      target: answer
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: llm
+      id: llm-source-17452390930000-target
+      source: llm
+      sourceHandle: source
+      target: '17452390930000'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: Start
+        type: start
+        variables: []
+      height: 53
+      id: '1745239074491'
+      position:
+        x: 30
+        y: 252
+      positionAbsolute:
+        x: 30
+        y: 252
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        memory:
+          query_prompt_template: '{{#sys.query#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: false
+            size: 10
+        model:
+          completion_params: {}
+          mode: chat
+          name: qwen-turbo
+          provider: langgenius/tongyi/tongyi
+        prompt_template:
+        - id: 2887883f-ad20-4a47-8756-8b2d70d280ad
+          role: system
+          text: "```xml\n<instruction>\n    <instructions>\n        请按照以下步骤处理用户的请求，并生成对应的搜索关键词：\n\
+            \        1. 仔细阅读用户输入的请求内容，理解其核心意图。\n        2. 识别请求中的关键实体（如动作、对象、地点、时间等），例如：\n\
+            \           - 动作：找、解决、查询\n           - 对象：餐厅、手机电池、AI技术\n           - 限定条件：北京、好评、2023年最新\n\
+            \        3. 去除修饰性词汇和停用词（如“的”、“我想”、“如何”），保留核心信息。\n        4. 将提取的元素按“主要意图+补充条件”顺序排列，用单个空格分隔。\n\
+            \        5. 确保关键词组合能准确反映用户需求，且适合直接用于搜索引擎检索。\n        \n        输出要求：\n\
+            \        - 使用简体中文关键词\n        - 不使用标点符号或特殊字符\n        - 不包含XML/HTML标签\n\
+            \        - 拒绝解释性语句，仅返回关键词\n    </instructions>\n\n    <examples>\n   \
+            \     <example>\n            <input>我想找一家在北京的意大利餐厅，要有好的评价</input>\n  \
+            \          <output>北京 意大利餐厅 好评</output>\n        </example>\n        <example>\n\
+            \            <input>如何解决手机电池耗电快的问题？</input>\n            <output>手机电池\
+            \ 耗电快 解决方法</output>\n        </example>\n        <example>\n         \
+            \   <input>2023年最新的AI技术有哪些？</input>\n            <output>2023年 最新 AI技术</output>\n\
+            \        </example>\n    </examples>\n\n    <additional_rules>\n     \
+            \   1. 处理复合请求时拆分独立需求：\n           输入：\"推荐静音鼠标和人体工学键盘\"\n           输出：\"\
+            静音鼠标 人体工学键盘\"\n        2. 对模糊表述进行合理推测：\n           输入：\"那个获奖的科幻电影\"\n\
+            \           输出：\"获奖 科幻电影 名称\"\n        3. 处理否定词时保留否定语义：\n           输入：\"\
+            不要带坚果的零食推荐\"\n           输出:\"无坚果 零食推荐\"\n    </additional_rules>\n</instruction>\n\
+            ```"
+        selected: false
+        title: 意图提取 大模型
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 89
+      id: llm
+      position:
+        x: 109.71428571428567
+        y: 766.2857142857143
+      positionAbsolute:
+        x: 109.71428571428567
+        y: 766.2857142857143
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#llm.text#}}'
+        desc: ''
+        selected: false
+        title: 展示数据 Answer
+        type: answer
+        variables: []
+      height: 104
+      id: answer
+      position:
+        x: 1242
+        y: 252
+      positionAbsolute:
+        x: 1242
+        y: 252
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        memory:
+          query_prompt_template: '{{#sys.query#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: false
+            size: 10
+        model:
+          completion_params: {}
+          mode: chat
+          name: qwen-max
+          provider: langgenius/tongyi/tongyi
+        prompt_template:
+        - id: 2887883f-ad20-4a47-8756-8b2d70d280ad
+          role: system
+          text: ''
+        selected: false
+        title: 调用工具 大模型
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 89
+      id: '17452390930000'
+      position:
+        x: 938
+        y: 252
+      positionAbsolute:
+        x: 938
+        y: 252
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: 851.9999999999999
+      y: 313.0000000000001
+      zoom: 0.7

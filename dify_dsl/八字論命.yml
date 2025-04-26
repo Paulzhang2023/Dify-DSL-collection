@@ -1,0 +1,393 @@
+app:
+  description: ''
+  icon: star_and_crescent
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: 八字論命
+  use_icon_as_answer_icon: false
+kind: app
+version: 0.1.5
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: 'AI偶有幻覺，可用網路工具確認八字命盤是否正確
+
+      https://fatew.com/
+
+
+      請問您要算的是下列哪一項?'
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions:
+    - 事業
+    - 健康
+    - 愛情
+    - 家庭
+    - 父母
+    - 子女
+    - 綜合
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        sourceType: llm
+        targetType: answer
+      id: llm-answer
+      source: llm
+      sourceHandle: source
+      target: answer
+      targetHandle: target
+      type: custom
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: parameter-extractor
+      id: 1740411020068-source-1740466792439-target
+      source: '1740411020068'
+      sourceHandle: source
+      target: '1740466792439'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: tool
+      id: 1740411020068-source-1740457678034-target
+      source: '1740411020068'
+      sourceHandle: source
+      target: '1740457678034'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: parameter-extractor
+        targetType: http-request
+      id: 1740466792439-source-1740466934085-target
+      source: '1740466792439'
+      sourceHandle: source
+      target: '1740466934085'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: http-request
+        targetType: llm
+      id: 1740466934085-source-llm-target
+      source: '1740466934085'
+      sourceHandle: source
+      target: llm
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: llm
+      id: 1740457678034-source-llm-target
+      source: '1740457678034'
+      sourceHandle: source
+      target: llm
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 開始
+        type: start
+        variables:
+        - label: 國曆生日
+          max_length: 48
+          options: []
+          required: true
+          type: text-input
+          variable: bday
+        - label: 出生時間(不確定可免填)
+          max_length: 48
+          options: []
+          required: false
+          type: text-input
+          variable: time
+        - label: 性別
+          max_length: 48
+          options:
+          - 男
+          - 女
+          required: true
+          type: select
+          variable: sex
+        - label: 出生地
+          max_length: 48
+          options: []
+          required: false
+          type: text-input
+          variable: location
+      height: 166
+      id: '1740411020068'
+      position:
+        x: 758.8773400061684
+        y: 282
+      positionAbsolute:
+        x: 758.8773400061684
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1740466934085'
+          - body
+        desc: ''
+        memory:
+          query_prompt_template: '性別: {{#1740411020068.sex#}}
+
+            西元生日: {{#1740411020068.bday#}}
+
+            出生時辰: {{#1740411020068.time#}}
+
+            出生地: {{#1740411020068.location#}}
+
+            目前日期: {{#1740457678034.text#}}
+
+            哪方面的運勢: {{#sys.query#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: true
+            size: 50
+        model:
+          completion_params:
+            max_tokens: 8192
+            temperature: 0.7
+          mode: chat
+          name: deepseek-reasoner
+          provider: deepseek
+        prompt_template:
+        - id: 3c49a062-9ac1-46d1-a2a1-c147d5da51fb
+          role: system
+          text: '農曆參考資訊:{{#context#}}
+
+            ---
+
+            你是八字算命大師，請依據提供資料計算生辰八字，如果出生時辰沒填寫，則列出當天所有時辰的命格分析
+
+            依下列步驟進行
+
+            1. 依據出生地換算經度
+
+            2. 計算命盤，請務必確認命盤是否正確，尤其出生日跟時辰請依據經度換算
+
+            3. 若沒填出生時辰, 則批次計算當日所有時辰, 且每個時段都計算八字跟運勢
+
+            4. 若沒填出生地, 則使用經度121°40''E換算
+
+            5. 只需分析今年運勢，最後須給出詳細的具體建議
+
+            6. 使用繁體中文回答,並使用台灣慣用語
+
+            7. 解釋前先列出求問幾基本資訊以及農曆生日跟基本命盤, 讓求問者確認資料是否正確
+
+            8. 解釋請用通俗易懂的語言，讓國中學生也能讀得懂的內容解釋'
+        selected: true
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 96
+      id: llm
+      position:
+        x: 2179.2675680014995
+        y: 282
+      positionAbsolute:
+        x: 2179.2675680014995
+        y: 282
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        answer: '以下為本次八字論命結果, 僅供參考, 切勿迷信
+
+          ---
+
+          {{#llm.text#}}'
+        desc: ''
+        selected: false
+        title: 直接回覆
+        type: answer
+        variables: []
+      height: 117
+      id: answer
+      position:
+        x: 2627.574231572828
+        y: 282
+      positionAbsolute:
+        x: 2627.574231572828
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        desc: ''
+        provider_id: time
+        provider_name: time
+        provider_type: builtin
+        selected: false
+        title: Current Time
+        tool_configurations:
+          format: '%Y-%m-%d %H:%M:%S'
+          timezone: Asia/Shanghai
+        tool_label: Current Time
+        tool_name: current_time
+        tool_parameters: {}
+        type: tool
+      height: 114
+      id: '1740457678034'
+      position:
+        x: 1582.5562822596219
+        y: 426.35397117434775
+      positionAbsolute:
+        x: 1582.5562822596219
+        y: 426.35397117434775
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        desc: ''
+        instruction: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gemini-2.0-pro-exp-02-05
+          provider: google
+        parameters:
+        - description: 出生年
+          name: year
+          required: true
+          type: string
+        - description: 出生月
+          name: month
+          required: true
+          type: string
+        - description: 出生日
+          name: day
+          required: true
+          type: string
+        query:
+        - '1740411020068'
+        - bday
+        reasoning_mode: prompt
+        selected: false
+        title: 參數提取器
+        type: parameter-extractor
+        variables: []
+        vision:
+          enabled: false
+      height: 96
+      id: '1740466792439'
+      position:
+        x: 1208.8870061130435
+        y: 157.8825668407477
+      positionAbsolute:
+        x: 1208.8870061130435
+        y: 157.8825668407477
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data: []
+          type: none
+        desc: ''
+        headers: ''
+        method: get
+        params: ''
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 100
+        selected: false
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: HTTP 請求
+        type: http-request
+        url: http://www.nongli.info/index.php?c=solar&year={{#1740466792439.year#}}&month={{#1740466792439.month#}}&date={{#1740466792439.day#}}
+        variables: []
+      height: 207
+      id: '1740466934085'
+      position:
+        x: 1582.5562822596219
+        y: 157.8825668407477
+      positionAbsolute:
+        x: 1582.5562822596219
+        y: 157.8825668407477
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    viewport:
+      x: -527.0042984987506
+      y: 84.9649799877896
+      zoom: 0.6328782969851396

@@ -1,0 +1,497 @@
+app:
+  description: 利用gemma2:9b做初始翻譯，再以deepseek-r1:7b做翻譯品質確認，最終再由gemma2:9b執行翻譯確認。
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: WorkFlw_翻譯小幫手
+  use_icon_as_answer_icon: false
+kind: app
+version: 0.1.5
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: end
+      id: 1737442626011-source-1737443043468-target
+      source: '1737442626011'
+      sourceHandle: source
+      target: '1737443043468'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: if-else
+      id: 1737437138376-source-1737445452583-target
+      source: '1737437138376'
+      sourceHandle: source
+      target: '1737445452583'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: llm
+      id: 1737445452583-false-1737437280488-target
+      source: '1737445452583'
+      sourceHandle: 'false'
+      target: '1737437280488'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: variable-aggregator
+      id: 1737437280488-source-1737445734535-target
+      source: '1737437280488'
+      sourceHandle: source
+      target: '1737445734535'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: variable-aggregator
+        targetType: llm
+      id: 1737445734535-source-1737437457673-target
+      source: '1737445734535'
+      sourceHandle: source
+      target: '1737437457673'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: variable-aggregator
+      id: 1737445452583-true-1737445734535-target
+      source: '1737445452583'
+      sourceHandle: 'true'
+      target: '1737445734535'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: code
+      id: 1737437457673-source-1739947261223-target
+      source: '1737437457673'
+      sourceHandle: source
+      target: '1739947261223'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: llm
+      id: 1739947261223-source-1737442626011-target
+      source: '1739947261223'
+      sourceHandle: source
+      target: '1737442626011'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 開始
+        type: start
+        variables:
+        - label: 來源語系
+          max_length: 48
+          options:
+          - 繁體中文
+          - 英文
+          - 日文
+          - 韓文
+          required: true
+          type: select
+          variable: vSourceLan
+        - label: 目標語系
+          max_length: 48
+          options:
+          - 英文
+          - 日文
+          - 韓文
+          - 繁體中文
+          required: true
+          type: select
+          variable: vTargetLan
+        - label: 內容領域
+          max_length: 48
+          options: []
+          required: true
+          type: text-input
+          variable: vDomain
+        - label: 原文
+          max_length: 8192
+          options: []
+          required: true
+          type: paragraph
+          variable: vSourceText
+        - label: 初始翻譯
+          max_length: 4960
+          options: []
+          required: false
+          type: paragraph
+          variable: initTranslatedText
+      height: 194
+      id: '1737437138376'
+      position:
+        x: -86.70995982956714
+        y: 221.3713373395841
+      positionAbsolute:
+        x: -86.70995982956714
+        y: 221.3713373395841
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.9
+          mode: chat
+          name: gemma2:9b
+          provider: ollama
+        prompt_template:
+        - id: c9b31777-6eea-49fa-835d-16b0909173f4
+          role: system
+          text: "<Role>\n\tYou are a professional translator whose primary responsibility\
+            \ is to translate the provided article content(which is in content tag)\
+            \ from the language '{{#1737437138376.vSourceLan#}}' to the language '{{#1737437138376.vTargetLan#}}'.\
+            \ \n\tThe primary application domain of this article is '{{#1737437138376.vDomain#}}'.\
+            \ \n\tTherefore, your translation must align with the usage conventions\
+            \ and terminology common in this domain.\n</Role>\n<Limitations>\n\tYour\
+            \ response should consist solely of the translated result. No additional\
+            \ explanations, comments, or context are required.\n</Limitations>\n<Steps>\n\
+            \t<Step>1. Carefully read and understand the source text .</Step>\n\t\
+            <Step>2. Identify the domain-specific terminology and stylistic conventions\
+            \ based on '{{#1737437138376.vDomain#}}'.</Step>\n\t<Step>3. Translate\
+            \ the content with a focus on accuracy and naturalness in '{{#1737437138376.vTargetLan#}}'.</Step>\n\
+            \t<Step>4. Review the translation to ensure it aligns with the professional\
+            \ standards and terminology of '{{#1737437138376.vDomain#}}'.</Step>\n\
+            </Steps>"
+        - role: user
+          text: "<content>\n\t'{{#1737437138376.vSourceText#}}'\n</content>\n\n<Task>\n\
+            \tTranslate the given article content from '{{#1737437138376.vSourceLan#}}'\
+            \ to '{{#1737437138376.vTargetLan#}}', ensuring domain-specific accuracy\
+            \ according to '{{#1737437138376.vDomain#}}'.\n</Task>"
+        selected: false
+        title: 初始翻譯
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1737437280488'
+      position:
+        x: 579.927550595844
+        y: 322.350928054242
+      positionAbsolute:
+        x: 579.927550595844
+        y: 322.350928054242
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.6
+          mode: chat
+          name: deepseek-r1:7b
+          provider: ollama
+        prompt_template:
+        - id: e1686e2c-4105-4449-8dd2-64c9d9d63498
+          role: system
+          text: "<Role>\n\tYou are a professional translation evaluator. Your primary\
+            \ responsibility is to assess the provided original text  which is in\
+            \ Original tag (in the language '{{#1737437138376.vSourceLan#}}') and\
+            \ the translated result which is in Translated tag (in the language '{{#1737437138376.vTargetLan#}}').\
+            \ \n\tThe content belongs to the application domain '{{#1737437138376.vDomain#}}'.\
+            \ \n\tYour evaluation must be accurate and aligned with the linguistic\
+            \ and domain-specific standards.\n</Role>\n<Limitations>\n\tYour response\
+            \ should consist solely of the requested evaluation results. Do not provide\
+            \ any additional explanations, comments, or context.\n</Limitations>\n\
+            <Steps>\n\t<Step>1. Read and understand the original text.</Step>\n\t\
+            <Step>2. Review the translation result.</Step>\n\t<Step>3. Assess the\
+            \ quality of the translation based on linguistic accuracy, fluency, and\
+            \ domain-specific terminology according to '{{#1737437138376.vDomain#}}'.</Step>\n\
+            \t<Step>4. Provide a score (1 to 10) representing the translation quality.\
+            \ Respond only with a numerical value.</Step>\n\t<Step>5. Identify any\
+            \ inappropriate or suboptimal parts of the translation and suggest specific\
+            \ adjustments or improvements.</Step>\n</Steps>"
+        - role: user
+          text: "<Original>{{#1737437138376.vSourceText#}}</Original>\n\n<Translated>{{#1737445734535.output#}}</Translated>\n\
+            \n<Task>\n\tEvaluate the translation quality between the original text\
+            \ (in '{{#1737437138376.vSourceLan#}}') and the translated text (in '{{#1737437138376.vTargetLan#}}'),\
+            \ considering the domain '{{#1737437138376.vDomain#}}'. \n\tRespond with\
+            \ the following:\n\t1. Translation Quality: A score from 1 to 10 (only\
+            \ the numerical value, no explanation).\n\t2. Suggested Adjustments: Provide\
+            \ suggestions for improvement where the translation is inappropriate.\n\
+            </Task>"
+        selected: false
+        title: 翻譯品質評核
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1737437457673'
+      position:
+        x: 1350.0228611855023
+        y: 243.15340360812675
+      positionAbsolute:
+        x: 1350.0228611855023
+        y: 243.15340360812675
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.9
+          mode: chat
+          name: gemma2:9b
+          provider: ollama
+        prompt_template:
+        - id: d625156e-d7cd-4a9a-b0ba-33d4005e747b
+          role: system
+          text: "<Role>\n\tYou are a professional translator. \n\tYour task is to\
+            \ refine the translation based on the provided source text which is in\
+            \ SourceText tag (in the language '{{#1737437138376.vSourceLan#}}'), the\
+            \ initial draft translation which is in DraftTranslation tag (in the language\
+            \ '{{#1737437138376.vTargetLan#}}'), and professional translation guidance\
+            \ which is in TranslationGuidance tag. \n\tThe primary application domain\
+            \ of this text is '{{#1737437138376.vDomain#}}'. \n\tTherefore, your final\
+            \ translation must align with the conventions, terminology, and professional\
+            \ standards common in this domain.\n</Role>\n<Limitations>\n\tYour response\
+            \ should consist solely of the final refined translation. No additional\
+            \ explanations, comments, or context are required. Ensure your response\
+            \ language is strictly in '{{#1737437138376.vTargetLan#}}'.\n</Limitations>\n\
+            <Steps>\n\t<Step>1. Carefully read and understand the source text.</Step>\n\
+            \t<Step>2. Analyze the initial draft translation.</Step>\n\t<Step>3. Review\
+            \ the professional translation guidance.</Step>\n\t<Step>4. Refine and\
+            \ finalize the translation, ensuring domain-specific accuracy and naturalness\
+            \ in '{{#1737437138376.vTargetLan#}}'.</Step>\n\t<Step>5. Verify the final\
+            \ result aligns with the professional standards and terminology of '{{#1737437138376.vDomain#}}'.</Step>\n\
+            </Steps>"
+        - role: user
+          text: "<SourceText>{{#1737437138376.vSourceText#}}</SourceText>\n\n<DraftTranslation>{{#1737445734535.output#}}</DraftTranslation>\n\
+            \n<TranslationGuidance>{{#1739947261223.result#}}</TranslationGuidance>\n\
+            \n<Task>\n\tRefine and finalize the translation of the provided source\
+            \ text, considering the draft translation and professional translation\
+            \ guidance. Ensure the final result adheres to domain-specific accuracy\
+            \ and is provided in '{{#1737437138376.vTargetLan#}}'.\n</Task>"
+        selected: true
+        title: 翻譯優化
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1737442626011'
+      position:
+        x: 2009.5323575119953
+        y: 221.3713373395841
+      positionAbsolute:
+        x: 2009.5323575119953
+        y: 221.3713373395841
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1737442626011'
+          - text
+          variable: text
+        selected: false
+        title: 結束 2
+        type: end
+      height: 90
+      id: '1737443043468'
+      position:
+        x: 2336.892010520814
+        y: 231.98135330515686
+      positionAbsolute:
+        x: 2336.892010520814
+        y: 231.98135330515686
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: not empty
+            id: f22b31c4-5329-4b18-94a0-ac2d3e486d81
+            value: ''
+            varType: string
+            variable_selector:
+            - '1737437138376'
+            - initTranslatedText
+          id: 'true'
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: 條件分支
+        type: if-else
+      height: 126
+      id: '1737445452583'
+      position:
+        x: 268.8636827937275
+        y: 136.6955688654105
+      positionAbsolute:
+        x: 268.8636827937275
+        y: 136.6955688654105
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        advanced_settings:
+          group_enabled: false
+          groups:
+          - groupId: 0648bc4d-dcd5-43ee-a8cb-8486b4785fda
+            group_name: Group1
+            output_type: string
+            variables:
+            - - '1737437280488'
+              - text
+            - - '1737437138376'
+              - initTranslatedText
+        desc: ''
+        output_type: string
+        selected: false
+        title: 變量聚合器
+        type: variable-aggregator
+        variables:
+        - - '1737437280488'
+          - text
+        - - '1737437138376'
+          - initTranslatedText
+      height: 130
+      id: '1737445734535'
+      position:
+        x: 893.5222015100345
+        y: 82.57786761521444
+      positionAbsolute:
+        x: 893.5222015100345
+        y: 82.57786761521444
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "import re\n\ndef main(indicate: str) -> dict:\n    return {\n     \
+          \   \"result\": re.sub(r'<think>.*?</think>', ' ', indicate, flags=re.DOTALL)\n\
+          \    }\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: 資料清洗(拿掉思考過程)
+        type: code
+        variables:
+        - value_selector:
+          - '1737437457673'
+          - text
+          variable: indicate
+      height: 54
+      id: '1739947261223'
+      position:
+        x: 1700.532500017793
+        y: 243.15340360812675
+      positionAbsolute:
+        x: 1700.532500017793
+        y: 243.15340360812675
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: -1090.5898248432327
+      y: 255.37372685767303
+      zoom: 0.870550563296124

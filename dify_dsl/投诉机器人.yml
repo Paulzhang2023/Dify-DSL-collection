@@ -1,0 +1,244 @@
+app:
+  description: 请大胆吐槽吧！！！
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: 投诉机器人
+  use_icon_as_answer_icon: false
+dependencies: []
+kind: app
+version: 0.1.5
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: template-transform
+        targetType: answer
+      id: 1743257764552-source-answer-target
+      source: '1743257764552'
+      sourceHandle: source
+      target: answer
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: if-else
+      id: 1743257702975-source-1743258077718-target
+      source: '1743257702975'
+      sourceHandle: source
+      target: '1743258077718'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: template-transform
+      id: 1743258077718-false-1743257764552-target
+      source: '1743258077718'
+      sourceHandle: 'false'
+      target: '1743257764552'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: answer
+      id: 1743258077718-true-1743258095297-target
+      source: '1743258077718'
+      sourceHandle: 'true'
+      target: '1743258095297'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - label: 用户名
+          max_length: 48
+          options: []
+          required: true
+          type: text-input
+          variable: username
+        - label: 手机号
+          max_length: 48
+          options: []
+          required: true
+          type: number
+          variable: phone
+      height: 116
+      id: '1743257702975'
+      position:
+        x: 78.83347096042388
+        y: 287.8326451978806
+      positionAbsolute:
+        x: 78.83347096042388
+        y: 287.8326451978806
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1743257764552.output#}}'
+        desc: ''
+        selected: false
+        title: 直接回复
+        type: answer
+        variables: []
+      height: 105
+      id: answer
+      position:
+        x: 1168.0132122006928
+        y: 282
+      positionAbsolute:
+        x: 1168.0132122006928
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        selected: false
+        template: "<form data-format=\"json\"> \r\n  <label for=\"username\">用户名字:</label>\
+          \ \r\n  <input type=\"text\" name=\"username\" value=\"{{ username }}\"\
+          /> \r\n  <label for=\"phone\">联系电话:</label> \r\n  <input type=\"text\" name=\"\
+          phone\" value=\"{{ phone }}\" /> \r\n  <label for=\"content\">投诉内容:</label>\
+          \ \r\n  <textarea name=\"content\"></textarea> \r\n  <button data-size=\"\
+          small\" data-variant=\"primary\">提交</button>\r\n</form>"
+        title: 模板转换 2
+        type: template-transform
+        variables:
+        - value_selector:
+          - '1743257702975'
+          - username
+          variable: username
+        - value_selector:
+          - '1743257702975'
+          - phone
+          variable: phone
+      height: 54
+      id: '1743257764552'
+      position:
+        x: 769.8367740105972
+        y: 287.8326451978806
+      positionAbsolute:
+        x: 769.8367740105972
+        y: 287.8326451978806
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: contains
+            id: 716d83da-d7f9-4431-ba42-3eb9b56e566a
+            value: '{"username'
+            varType: string
+            variable_selector:
+            - sys
+            - query
+          id: 'true'
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: 条件分支
+        type: if-else
+      height: 126
+      id: '1743258077718'
+      position:
+        x: 396.83181943533725
+        y: 181.67850259645394
+      positionAbsolute:
+        x: 396.83181943533725
+        y: 181.67850259645394
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: 提交成功
+        desc: ''
+        selected: false
+        title: 直接回复 2
+        type: answer
+        variables: []
+      height: 102
+      id: '1743258095297'
+      position:
+        x: 799.0000000000001
+        y: 116.19708225367822
+      positionAbsolute:
+        x: 799.0000000000001
+        y: 116.19708225367822
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: -471.0217082076802
+      y: 313.17130728744405
+      zoom: 0.8572439828530728
