@@ -8,15 +8,14 @@
 如果我的项目对您有帮助请点一个star吧~
 </div>
 
+![image](https://github.com/user-attachments/assets/d0afa1a3-765f-4120-8172-becf6f036ce4)
 
+![image](https://github.com/user-attachments/assets/fe5acd73-ac52-4f22-a5f7-68c2749de75d)
 
-![image-1](./docs/images/image1.jpg)
-
-![image-2](./docs/images/image2.jpg)
 
 基本的dify workflow api支持
+![image](https://github.com/user-attachments/assets/efcfb1eb-e777-4719-973e-51781a204135)
 
-![image-3](./docs/images/image4.jpg)
 
 目前Dify已经测试过的通道如下：
 
@@ -32,14 +31,17 @@
 ## 1. 集成[JinaSum](https://github.com/hanfangyuan4396/jina_sum)插件
 使用Jina Reader和ChatGPT支持总结公众号、小红书、知乎等分享卡片链接，配置详情请查看[JinaSum](https://github.com/hanfangyuan4396/jina_sum)
 
-![plugin-jinasum-1](./plugins/jina_sum/docs/images/wechat_mp.jpg)
-![plugin-jinasum-1](./plugins/jina_sum/docs/images/red.jpg)
+![image](https://github.com/user-attachments/assets/c30ccf7c-79ee-446e-ab45-fa036c08cbca)
+
+![image](https://github.com/user-attachments/assets/db4dc108-7940-417e-ab2c-c925a5b51887)
+
 
 ## 2. Suno音乐插件
 使用 [Suno](https://github.com/hanfangyuan4396/suno) 插件生成音乐
 
-![plugin-suno-1](./docs/images/plugin-suno-1.jpg)
-![plugin-suno-2](./docs/images/plugin-suno-2.jpg)
+![image](https://github.com/user-attachments/assets/119a4405-3aff-4aa6-a676-6fc14ac13cac)
+![image](https://github.com/user-attachments/assets/a566c0b9-8deb-4bc6-bf45-36c934831720)
+
 
 我把音乐、封面和歌词简单剪成了一个视频，效果很炸裂，Suno生成的效果好的离谱
 
@@ -52,10 +54,9 @@ dify官网已正式上线工作流模式，可以导入本项目下的[dsl文件
 (ps: 感觉工作流类型应用不太适合作为聊天机器人，现在它还没有会话的概念，需要自己管理上下文。但是它可以调用各种工具，通过http请求和外界交互，适合执行业务逻辑复杂的任务；它可以导入导出工作流dsl文件，方便分享移植。也许以后dsl文件+配置文件就可以作为本项目的一个插件。)
 ## 4. 支持COZE API
 
-![image-5](./docs/images/image5.jpg)
+![image](https://github.com/user-attachments/assets/4bc8fd6d-b9d8-4812-a31e-acc4bc76e56c)
 
-![image-6](./docs/images/image6.jpg)
-
+![image](https://github.com/user-attachments/assets/232d4e59-5f71-4589-ac89-69fa598f9349)
 
 
 ### 4.1 如何快速启动coze微信机器人
@@ -101,12 +102,6 @@ python3 app.py                                    # windows环境下该命令通
 - 2024/04/04 支持docker部署
 - 2024/03/31 支持coze api(内测版)
 - 2024/03/29 支持dify基础的对话工作流，由于dify官网还未上线工作流，需要自行部署测试 [0.6.0-preview-workflow.1](https://github.com/langgenius/dify/releases/tag/0.6.0-preview-workflow.1)。
-# Dify on WeChat 交流群
-
-添加我的微信拉你进群
-
-<img width="240" src="./docs/images/image3.png">
-
 
 
 # 快速开始
