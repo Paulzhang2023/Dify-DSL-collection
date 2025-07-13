@@ -1,0 +1,1138 @@
+app:
+  description: 发票识别专家,票据内容识别并将识别的票据内容用HTML页面展示
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: 发票识别专家
+  use_icon_as_answer_icon: false
+kind: app
+version: 0.1.3
+workflow:
+  conversation_variables:
+  - description: 票据类型
+    id: 14d17228-1413-4e3c-ae80-2b0cabec1461
+    name: BillType
+    value: ''
+    value_type: string
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: 请上传你要识别的票据图片，并选择对应的票据类型。
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions:
+    - 增值税电子普通发票
+    - 全电发票
+    - 增值税普通发票（卷票）
+    - 定额发票
+    - 电子发票（铁路电子客票）
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: assigner
+      id: 1730959286015-source-1730959461085-target
+      selected: false
+      source: '1730959286015'
+      sourceHandle: source
+      target: '1730959461085'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: assigner
+        targetType: document-extractor
+      id: 1730959461085-source-1730959497958-target
+      selected: false
+      source: '1730959461085'
+      sourceHandle: source
+      target: '1730959497958'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: document-extractor
+        targetType: llm
+      id: 1730959497958-source-llm-target
+      selected: false
+      source: '1730959497958'
+      sourceHandle: source
+      target: llm
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: if-else
+      id: 1730967621621-source-1730967773845-target
+      selected: false
+      source: '1730967621621'
+      sourceHandle: source
+      target: '1730967773845'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: answer
+      id: 1730967773845-0c3b4ffe-c7a6-48a7-aaee-020997c3267b-1730967848147-target
+      selected: false
+      source: '1730967773845'
+      sourceHandle: 0c3b4ffe-c7a6-48a7-aaee-020997c3267b
+      target: '1730967848147'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: if-else
+      id: 1730967773845-true-1730968140329-target
+      selected: false
+      source: '1730967773845'
+      sourceHandle: 'true'
+      target: '1730968140329'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: llm
+      id: 1730968140329-true-1730968214149-target
+      selected: false
+      source: '1730968140329'
+      sourceHandle: 'true'
+      target: '1730968214149'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: variable-aggregator
+      id: 1730968214149-source-1730968273295-target
+      selected: false
+      source: '1730968214149'
+      sourceHandle: source
+      target: '1730968273295'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: llm
+      id: 1730968140329-3977f74c-74ac-4679-9a58-a6ab741cd4c1-1730968421769-target
+      selected: false
+      source: '1730968140329'
+      sourceHandle: 3977f74c-74ac-4679-9a58-a6ab741cd4c1
+      target: '1730968421769'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: variable-aggregator
+      id: 1730968421769-source-1730968273295-target
+      selected: false
+      source: '1730968421769'
+      sourceHandle: source
+      target: '1730968273295'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: llm
+      id: 1730968140329-d44b049e-76d9-4c8d-ab73-df004b4bd29d-1730975297412-target
+      selected: false
+      source: '1730968140329'
+      sourceHandle: d44b049e-76d9-4c8d-ab73-df004b4bd29d
+      target: '1730975297412'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: llm
+      id: 1730968140329-5a653bfb-2be0-46b1-9077-bfcb070d2118-1730975393219-target
+      selected: false
+      source: '1730968140329'
+      sourceHandle: 5a653bfb-2be0-46b1-9077-bfcb070d2118
+      target: '1730975393219'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: llm
+      id: 1730968140329-3a622b07-c97e-4128-bfe1-fd403ec834ed-1730975429130-target
+      selected: false
+      source: '1730968140329'
+      sourceHandle: 3a622b07-c97e-4128-bfe1-fd403ec834ed
+      target: '1730975429130'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: if-else
+      id: llm-source-1730975611554-target
+      selected: false
+      source: llm
+      sourceHandle: source
+      target: '1730975611554'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: code
+      id: 1730975611554-true-1730967621621-target
+      selected: false
+      source: '1730975611554'
+      sourceHandle: 'true'
+      target: '1730967621621'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: answer
+      id: 1730975611554-false-1730975649767-target
+      selected: false
+      source: '1730975611554'
+      sourceHandle: 'false'
+      target: '1730975649767'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: variable-aggregator
+      id: 1730975297412-source-1730968273295-target
+      selected: false
+      source: '1730975297412'
+      sourceHandle: source
+      target: '1730968273295'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: variable-aggregator
+      id: 1730975393219-source-1730968273295-target
+      selected: false
+      source: '1730975393219'
+      sourceHandle: source
+      target: '1730968273295'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: variable-aggregator
+      id: 1730975429130-source-1730968273295-target
+      selected: false
+      source: '1730975429130'
+      sourceHandle: source
+      target: '1730968273295'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: variable-aggregator
+        targetType: llm
+      id: 1730968273295-source-1730975991391-target
+      selected: false
+      source: '1730968273295'
+      sourceHandle: source
+      target: '1730975991391'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: http-request
+      id: 1730975991391-source-1730976049428-target
+      selected: false
+      source: '1730975991391'
+      sourceHandle: source
+      target: '1730976049428'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: http-request
+        targetType: llm
+      id: 1730976049428-source-1730976142538-target
+      selected: false
+      source: '1730976049428'
+      sourceHandle: source
+      target: '1730976142538'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: template-transform
+      id: 1730976142538-source-1730976203245-target
+      selected: false
+      source: '1730976142538'
+      sourceHandle: source
+      target: '1730976203245'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: template-transform
+        targetType: answer
+      id: 1730976203245-source-1730960875024-target
+      selected: false
+      source: '1730976203245'
+      sourceHandle: source
+      target: '1730960875024'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - allowed_file_extensions: []
+          allowed_file_types:
+          - image
+          allowed_file_upload_methods:
+          - local_file
+          - remote_url
+          label: 请上传你要识别的票据图片
+          max_length: 48
+          options: []
+          required: true
+          type: file
+          variable: File
+      height: 109
+      id: '1730959286015'
+      position:
+        x: -229.86038576393844
+        y: 286.40083644281935
+      positionAbsolute:
+        x: -229.86038576393844
+        y: 286.40083644281935
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1730959286015'
+          - File
+        desc: ''
+        memory:
+          query_prompt_template: ''
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: false
+            size: 50
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: Qwen/Qwen2-VL-72B-Instruct
+          provider: openai_api_compatible
+        prompt_template:
+        - id: f3ccb505-5e67-4189-bed8-4a0506137ebe
+          role: system
+          text: '你是一位专业的发票识别专家。您的专长包括发票类型识别、图像分析及文字识别。凭借多年处理各类发票和票据的经验，您具备精准识别不同类型发票特征的能力。
+
+            目标是根据用户上传的发票图像准确识别发票类型，并返回对应的发票类型名称。
+
+            规则如下：
+
+            仔细分析发票上的所有视觉和文字信息。
+
+            只返回指定的发票类型名称，不做其他解释。
+
+            如果无法确定发票类型，返回 "无法识别"。
+
+            工作流程：
+
+            接收用户上传的发票图像。
+
+            分析图像中的关键信息和特征。
+
+            对比不同类型发票的特征。
+
+            确定发票类型。
+
+            返回对应的类型名称。
+
+            请根据图片内容识别票据类型，并从以下列表中选择一个最匹配的类型进行输出：
+
+            增值税电子普通发票；特征为电子版式，有"增值税电子普通发票"字样，含二维码，有密码区，有"税局监制"字样。
+
+            全电发票；特征为电子版式，有"电子发票（增值税专用发票）"或"电子发票（普通发票）"字样，发票号码长度有20位。
+
+            增值税普通发票（卷票）；特征为纸质卷式，较窄，有"增值税普通发票（卷票）发票联"字样，通常为红色或蓝色。
+
+            定额发票；特征为小型纸质票据，预先印制金额，通常用于小额交易。
+
+            电子发票（铁路电子客票）；特征为电子版式，有"电子发票（铁路电子客票）"标志，包含乘车日期、车次、座位等信息，有发票号码，发票号码长度20位。
+
+            如果图像模糊，无法辨识关键信息，请输出 "无法识别"。
+
+            请仅输出票据类型名称，不要添加任何额外的信息。'
+        selected: false
+        title: 票据类型判断
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+            variable_selector:
+            - '1730959286015'
+            - File
+          enabled: true
+      height: 119
+      id: llm
+      position:
+        x: 525.0806727176197
+        y: 286.40083644281935
+      positionAbsolute:
+        x: 525.0806727176197
+        y: 286.40083644281935
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        assigned_variable_selector:
+        - conversation
+        - BillType
+        desc: ''
+        input_variable_selector:
+        - sys
+        - query
+        selected: false
+        title: 票据类型设置
+        type: assigner
+        write_mode: over-write
+      height: 153
+      id: '1730959461085'
+      position:
+        x: 27.454460283426897
+        y: 286.40083644281935
+      positionAbsolute:
+        x: 27.454460283426897
+        y: 286.40083644281935
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: ''
+        is_array_file: true
+        selected: false
+        title: 票据文件提取
+        type: document-extractor
+        variable_selector:
+        - sys
+        - files
+      height: 111
+      id: '1730959497958'
+      position:
+        x: 274.8232969341458
+        y: 286.40083644281935
+      positionAbsolute:
+        x: 274.8232969341458
+        y: 286.40083644281935
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        answer: '{{#1730976203245.output#}}'
+        desc: ''
+        selected: false
+        title: 直接回复 2
+        type: answer
+        variables: []
+      height: 118
+      id: '1730960875024'
+      position:
+        x: 3994.890375276914
+        y: 282
+      positionAbsolute:
+        x: 3994.890375276914
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        code: "def main(arg1: str, BillType: str) -> dict:\n    if arg1 == BillType:\n\
+          \        return {\"result\": \"匹配成功\"}\n    else:\n        return {\"result\"\
+          : \"匹配失败\"}\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: 代码执行
+        type: code
+        variables:
+        - value_selector:
+          - llm
+          - text
+          variable: arg1
+        - value_selector:
+          - conversation
+          - BillType
+          variable: BillType
+      height: 64
+      id: '1730967621621'
+      position:
+        x: 1195.5649749723368
+        y: 286.40083644281935
+      positionAbsolute:
+        x: 1195.5649749723368
+        y: 286.40083644281935
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: contains
+            id: 42c1fabd-2890-43c3-8d88-d0765cbe8a0a
+            value: 匹配成功
+            varType: string
+            variable_selector:
+            - '1730967621621'
+            - result
+          id: 'true'
+          logical_operator: and
+        - case_id: 0c3b4ffe-c7a6-48a7-aaee-020997c3267b
+          conditions:
+          - comparison_operator: contains
+            id: 372763a1-9b4a-4fac-9480-07dcd36ffd99
+            value: 匹配失败
+            varType: string
+            variable_selector:
+            - '1730967621621'
+            - result
+          id: 0c3b4ffe-c7a6-48a7-aaee-020997c3267b
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: 条件分支
+        type: if-else
+      height: 214
+      id: '1730967773845'
+      position:
+        x: 1528.6117043756872
+        y: 282
+      positionAbsolute:
+        x: 1528.6117043756872
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        answer: 很抱歉，你上传的票据图片和你给出的票据类型不匹配，请确认好你上传的票据类型后再开始操作。
+        desc: ''
+        selected: false
+        title: 直接回复 2
+        type: answer
+        variables: []
+      height: 177
+      id: '1730967848147'
+      position:
+        x: 1895.9698941241309
+        y: 829.0841125450011
+      positionAbsolute:
+        x: 1895.9698941241309
+        y: 829.0841125450011
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: is
+            id: 9f1b859f-14de-433e-8abc-5989913f07a0
+            value: 增值税电子普通发票
+            varType: string
+            variable_selector:
+            - conversation
+            - BillType
+          id: 'true'
+          logical_operator: and
+        - case_id: 3977f74c-74ac-4679-9a58-a6ab741cd4c1
+          conditions:
+          - comparison_operator: is
+            id: c4f35363-ec62-46d7-85af-ce875e897e15
+            value: 全电发票
+            varType: string
+            variable_selector:
+            - conversation
+            - BillType
+          id: 3977f74c-74ac-4679-9a58-a6ab741cd4c1
+          logical_operator: and
+        - case_id: d44b049e-76d9-4c8d-ab73-df004b4bd29d
+          conditions:
+          - comparison_operator: is
+            id: ce86fce7-4b36-4ddf-b631-753d7c1d1779
+            value: 增值税普通发票（卷票）
+            varType: string
+            variable_selector:
+            - conversation
+            - BillType
+          id: d44b049e-76d9-4c8d-ab73-df004b4bd29d
+          logical_operator: and
+        - case_id: 5a653bfb-2be0-46b1-9077-bfcb070d2118
+          conditions:
+          - comparison_operator: is
+            id: 3382a96f-ddcd-4347-9ff2-77a35ad846a5
+            value: 定额发票
+            varType: string
+            variable_selector:
+            - conversation
+            - BillType
+          id: 5a653bfb-2be0-46b1-9077-bfcb070d2118
+          logical_operator: and
+        - case_id: 3a622b07-c97e-4128-bfe1-fd403ec834ed
+          conditions:
+          - comparison_operator: is
+            id: 3617cecd-cb87-43c6-9507-abec521b4f2e
+            value: 电子发票（铁路电子客票）
+            varType: string
+            variable_selector:
+            - conversation
+            - BillType
+          id: 3a622b07-c97e-4128-bfe1-fd403ec834ed
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: 条件分支 2
+        type: if-else
+      height: 394
+      id: '1730968140329'
+      position:
+        x: 1895.9698941241309
+        y: 282
+      positionAbsolute:
+        x: 1895.9698941241309
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1730959286015'
+          - File
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: Qwen/Qwen2-VL-72B-Instruct
+          provider: openai_api_compatible
+        prompt_template:
+        - id: b3b2ae27-82f1-4bfd-97d4-51fbd5bee669
+          role: system
+          text: 请提取这张照片的内容，其中内容格式‘发票名称’、‘机器编号’、‘发票代码’、‘发票号码’、‘开票日期’、‘校 验 码’、‘购买方名称’、‘购买方纳税人识别号’、‘购买方地
+            址、电 话’、‘开户行及账号’、‘货物或应税劳务、服务名称’、‘规格型号’、‘单 位’、‘数 量’、‘单 价’、‘金 额’、‘税率’、‘税
+            额’、‘价税合计（大写）’、‘价税合计（小写）’、‘销售方名称’、‘销售方纳税人识别号’、‘销售方地 址、电 话’、‘销售方地 址、电 话’、‘开户行及账号’、‘备注’、‘收款人’、‘复核’、‘开票人’
+            字段返回信息，返回的结果信息以json格式返回
+        selected: false
+        title: 增值税电子普通发票
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+            variable_selector:
+            - '1730959286015'
+            - File
+          enabled: true
+      height: 119
+      id: '1730968214149'
+      position:
+        x: 2168.284635973159
+        y: 282
+      positionAbsolute:
+        x: 2168.284635973159
+        y: 282
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: ''
+        output_type: string
+        selected: false
+        title: 变量聚合器
+        type: variable-aggregator
+        variables:
+        - - '1730968214149'
+          - text
+        - - '1730968421769'
+          - text
+        - - '1730975297412'
+          - text
+        - - '1730975393219'
+          - text
+        - - '1730975429130'
+          - text
+      height: 267
+      id: '1730968273295'
+      position:
+        x: 2513.7259147335863
+        y: 284.2004182214097
+      positionAbsolute:
+        x: 2513.7259147335863
+        y: 284.2004182214097
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1730959286015'
+          - File
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: Qwen/Qwen2-VL-72B-Instruct
+          provider: openai_api_compatible
+        prompt_template:
+        - id: 4970d811-bc0e-4c54-8ff5-9456fef53eda
+          role: system
+          text: 请提取这张照片的内容，其中内容格式‘发票号码’、‘开票日期’、‘购买方信息名称’、‘购买方统一社会信用代码/纳税人识别号’、‘销售方信息名称’、‘销售方统一社会信用代码/纳税人识别号’、‘项目名称’、‘规格型号’、‘单
+            位’、‘数 量’、‘单 价’、‘金 额’、‘税率/征收率’、‘税 额’、‘合计’、‘价税合计（大写）’、‘价税合计（小写）’、‘备 注’ 字段返回信息，返回的结果信息以json格式返回
+        selected: false
+        title: 全电发票
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+            variable_selector:
+            - '1730959286015'
+            - File
+          enabled: true
+      height: 119
+      id: '1730968421769'
+      position:
+        x: 2168.284635973159
+        y: 405.32088367971494
+      positionAbsolute:
+        x: 2168.284635973159
+        y: 405.32088367971494
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1730959286015'
+          - File
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: Qwen/Qwen2-VL-72B-Instruct
+          provider: openai_api_compatible
+        prompt_template:
+        - id: ceb22de1-fa4b-4ab4-8e25-4ce08c750d50
+          role: system
+          text: 请提取这张照片的内容，其中内容格式‘发票代码’、'发票号码’、'机打号码’、‘机器编号’、‘销售方名称’、‘纳税人识别号’、‘开票日期’、‘收款员’、‘购买方名称’、‘纳税人识别号’、‘项目’、‘单价’、‘数量’、‘金额’、‘合计金额（小写）’、‘合计金额（大写）’、‘校验码’字段返回信息，返回的结果信息以json格式返回
+        selected: false
+        title: 增值税普通发票（卷票）
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+            variable_selector:
+            - '1730959286015'
+            - File
+          enabled: true
+      height: 119
+      id: '1730975297412'
+      position:
+        x: 2168.284635973159
+        y: 526.491385540521
+      positionAbsolute:
+        x: 2168.284635973159
+        y: 526.491385540521
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1730959286015'
+          - File
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: Qwen/Qwen2-VL-72B-Instruct
+          provider: openai_api_compatible
+        prompt_template:
+        - id: 1e2f79a1-cb2e-4850-90f6-c8e688491ea9
+          role: system
+          text: 请提取这张照片的内容，其中内容格式‘发票代码’、'发票号码’、'金额’字段返回信息，返回的结果信息以json格式返回
+        selected: false
+        title: 定额发票
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+            variable_selector:
+            - '1730959286015'
+            - File
+          enabled: true
+      height: 119
+      id: '1730975393219'
+      position:
+        x: 2168.284635973159
+        y: 658.2983875827401
+      positionAbsolute:
+        x: 2168.284635973159
+        y: 658.2983875827401
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1730959286015'
+          - File
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: Qwen/Qwen2-VL-72B-Instruct
+          provider: openai_api_compatible
+        prompt_template:
+        - id: e23cb8ad-5643-472b-b809-7681500ebc0e
+          role: system
+          text: 请提取这张照片的内容，其中内容格式‘发票号码’、'开票日期’、'‘出发时间’、‘始发站’、‘终点站’、‘车次’、‘票价’、‘身份证号’、‘姓名’、‘电子客票号’、‘购买方名称’、‘统一社会信用代码’字段返回信息，返回的结果信息以json格式返回
+        selected: false
+        title: 电子发票（铁路电子客票）
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+            variable_selector:
+            - '1730959286015'
+            - File
+          enabled: true
+      height: 119
+      id: '1730975429130'
+      position:
+        x: 2168.284635973159
+        y: 792.6230928790019
+      positionAbsolute:
+        x: 2168.284635973159
+        y: 792.6230928790019
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: not contains
+            id: 1426dc50-5ee3-45ce-a2e5-a7037dc2587d
+            value: 无法识别
+            varType: string
+            variable_selector:
+            - llm
+            - text
+          id: 'true'
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: 条件分支 3
+        type: if-else
+      height: 154
+      id: '1730975611554'
+      position:
+        x: 821.5596786480046
+        y: 286.40083644281935
+      positionAbsolute:
+        x: 821.5596786480046
+        y: 286.40083644281935
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        answer: 很抱歉，你上传的图片清晰度不够，无法辨识关键信息。或上传的图片非票据图片，请重新上传清晰准确的票据图片。
+        desc: ''
+        selected: false
+        title: 直接回复 3
+        type: answer
+        variables: []
+      height: 177
+      id: '1730975649767'
+      position:
+        x: 1195.5649749723368
+        y: 559.1352958909638
+      positionAbsolute:
+        x: 1195.5649749723368
+        y: 559.1352958909638
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1730968273295'
+          - output
+        desc: ''
+        model:
+          completion_params:
+            format: json
+            temperature: 0.7
+          mode: chat
+          name: qwen2.5:latest
+          provider: ollama
+        prompt_template:
+        - id: 8994dadd-a482-438c-a5d9-7a94950c987f
+          role: system
+          text: 请将{{#context#}}内容转化为JSON 格式的发票数据。确保转换后的 JSON 格式数据中没有任何无效字符或非法的控制字符。
+        selected: false
+        title: json格式确认
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 119
+      id: '1730975991391'
+      position:
+        x: 2822.6264275416943
+        y: 282
+      positionAbsolute:
+        x: 2822.6264275416943
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data:
+          - id: key-value-1544
+            key: ''
+            type: text
+            value: '{{#1730975991391.text#}}'
+          type: json
+        desc: ''
+        headers: Content-Type:application/json
+        method: post
+        params: ''
+        selected: false
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: HTTP 请求
+        type: http-request
+        url: http://host.docker.internal:5001/invoice
+        variables: []
+      height: 134
+      id: '1730976049428'
+      position:
+        x: 3120.8418470266274
+        y: 286.40083644281935
+      positionAbsolute:
+        x: 3120.8418470266274
+        y: 286.40083644281935
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1730976049428'
+          - body
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gemma2:latest
+          provider: ollama
+        prompt_template:
+        - id: 39294744-16d2-4b07-b2ec-923f420130f8
+          role: system
+          text: 你是一位内容排版专家,擅长将J{{#context#}}结构化内容转换为对读者友好的文本格式。你的任务是在不改变原始内容和语言的前提下,提升文档的可读性。并获取一个可供预览的链接并显示。
+        selected: false
+        title: web页预览链接
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 119
+      id: '1730976142538'
+      position:
+        x: 3424.536110712111
+        y: 282
+      positionAbsolute:
+        x: 3424.536110712111
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: ''
+        selected: false
+        template: '{{ arg1 }}'
+        title: 模板转换
+        type: template-transform
+        variables:
+        - value_selector:
+          - '1730976142538'
+          - text
+          variable: arg1
+      height: 64
+      id: '1730976203245'
+      position:
+        x: 3705.4392790079373
+        y: 282
+      positionAbsolute:
+        x: 3705.4392790079373
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    viewport:
+      x: -893.3163740136893
+      y: -5.588331336113598
+      zoom: 0.5325950999829439
