@@ -3,7 +3,7 @@ app:
   icon: 🤖
   icon_background: '#FFEAD5'
   mode: agent-chat
-  name: ai agent智能体
+  name: 通用智能体
   use_icon_as_answer_icon: false
 kind: app
 model_config:
@@ -119,7 +119,7 @@ model_config:
     provider: google
   more_like_this:
     enabled: false
-  opening_statement: 欢迎来到周辉的AI Agent智能体，该智能体主要包括了联网搜索、AI绘画、获取当前时间、语音播报等功能。
+  opening_statement: 欢迎来到AI Agent智能体，该智能体主要包括了联网搜索、AI绘画、获取当前时间、语音播报等功能。
   pre_prompt: ''
   prompt_type: simple
   retriever_resource:
