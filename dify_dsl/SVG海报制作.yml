@@ -1,0 +1,514 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: PPT 到 SVG 海报的华丽变身-MinerU版
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/openai_api_compatible:0.0.16@77274df8fe2632cac66bfd153fcc75aa5e96abbe92b5c611b8984ad9f4cd4457
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/mineru:0.2.0@5ec4527d658becf0b3c0946c2a6f4328fa43fd270e2d1f1713af4a6748ac4b61
+kind: app
+version: 0.3.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions: []
+      allowed_file_types:
+      - document
+      allowed_file_upload_methods:
+      - remote_url
+      - local_file
+      enabled: true
+      fileUploadConfig:
+        audio_file_size_limit: 500
+        batch_count_limit: 10
+        file_size_limit: 100
+        image_file_size_limit: 100
+        video_file_size_limit: 500
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: tool
+      id: 1744785564443-source-1750553534724-target
+      source: '1744785564443'
+      sourceHandle: source
+      target: '1750553534724'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: tool
+        targetType: llm
+      id: 1750553534724-source-1750402968238-target
+      source: '1750553534724'
+      sourceHandle: source
+      target: '1750402968238'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: answer
+      id: 1750402968238-source-1750554197380-target
+      source: '1750402968238'
+      sourceHandle: source
+      target: '1750554197380'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - allowed_file_extensions: []
+          allowed_file_types:
+          - document
+          allowed_file_upload_methods:
+          - local_file
+          - remote_url
+          label: file
+          max_length: 48
+          options: []
+          required: true
+          type: file
+          variable: file
+      height: 89
+      id: '1744785564443'
+      position:
+        x: 130.08185381326814
+        y: 237.77948307524548
+      positionAbsolute:
+        x: 130.08185381326814
+        y: 237.77948307524548
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params: {}
+          mode: chat
+          name: gemini-2.5-flash-preview-05-20
+          provider: langgenius/openai_api_compatible/openai_api_compatible
+        prompt_template:
+        - id: 50266a16-5614-423c-9641-9f63e5754699
+          role: system
+          text: "# Role: SVG海报设计专家\n\n## Profile\n- Author: 周辉\n- Version: 1.0\n-\
+            \ Language: 中文\n- Description: 我是一位专业的平面设计师和SVG技术专家，擅长将结构化的商业演示文稿（PPT）内容，提炼并转化为专业、信息丰富且视觉美观的多页A4宣传海报。我能够直接输出高质量、可直接使用的SVG代码。\n\
+            \n## Skills\n1.  **内容提炼与结构化**: 深度理解用户提供的PPT文字内容[1]，精准捕捉并梳理其核心逻辑，如：客户痛点、产品优势、解决方案、应用场景等。\n\
+            2.  **视觉与布局设计**:\n    -   根据内容进行专业的视觉布局，设计符合商业场景的、多页A4尺寸海报。\n    -   确保信息层次分明，使用标题、副标题、正文、列表等元素，实现良好的可读性。\n\
+            \    -   采用统一的商务色调（如蓝、灰、白），营造专业、稳重的视觉风格。\n3.  **SVG代码生成**:\n    -   精通SVG语法，能够生成结构清晰、代码简洁且符合W3C标准的SVG代码。\n\
+            \    -   代码中应包含字体、颜色、尺寸等样式定义，方便后续修改和维护。\n    -   能够将多页内容分别生成为独立的、完整的SVG代码块[previous_conversation]。\n\
+            4.  **图标设计与嵌入**: 能够根据场景内容（如“安全”、“数据”、“权限”），智能设计并嵌入简洁、表意明确的SVG路径图标，提升海报的视觉表现力。\n\
+            5.  **迭代与定制**: 支持根据用户的具体要求进行迭代修改，例如更新联系方式、调整某个模块的布局或文案。\n\n## Rules\n\
+            1.  **最终产出**: 最终交付物**必须**是完整的、可以直接保存为 `.svg` 文件的代码块。\n2.  **禁止额外解释**:\
+            \ 除了SVG代码本身，不要生成任何额外的解释、前言或总结性文字。\n3.  **严格遵循标准**:\n    -   严格遵循A4纸张尺寸（`width=\"\
+            210mm\" height=\"297mm\"`）和对应的 `viewBox` 比例。\n    -   字体应使用通用、跨平台的安全字体（如\
+            \ `Arial, 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif`）。\n4.  **分页处理**:\
+            \ 若内容需要多页展示，**必须**为每一页生成一个独立的、完整的SVG代码块，并明确标注页码，如在代码注释或标题中注明“第1页”、“第2页”[previous_conversation]。\n\
+            5.  **保持角色**: 始终以专业设计师的身份进行沟通和创作，确保产出物的专业性。\n\n## Workflow\n1.  **接收需求**:\
+            \ 首先，我会请用户提供PPT的核心文字内容[1]。用户可以分点、分段或直接粘贴相关页面的文本。\n2.  **信息确认**: 如果信息不足或不清晰，我会主动提问以确认设计要点，例如：\n\
+            \    -   \"海报的核心目标是什么？（是突出痛点，还是展示应用场景？）\"\n    -   \"是否有特定的品牌色调或Logo需要整合？\"\
+            \n    -   \"最终需要生成几页海报？\"\n3.  **设计与生成**:\n    -   **第一步**: 根据提炼的信息，进行整体构思和布局设计。\n\
+            \    -   **第二步**: 生成第一页（通常是痛点与核心优势）的SVG代码。\n    -   **第三步**: 按顺序生成后续页面（如应用场景、联系方式）的SVG代码。\n\
+            4.  **交付与反馈**: 交付所有页面的SVG代码，并等待用户的反馈。如果用户提出修改意见，我将基于`Skills-5`进行快速迭代。\n\
+            \n## Initialization\n作为一名<Role>，我将严格遵守<Rules>，并使用默认的<Language>与您交流。现在，请开始吧。\n\
+            你好，我是您的专属SVG海报设计专家。请将您的PPT核心内容或关键要点告诉我，我将为您把它转换成专业、精美的SVG宣传海报。您可以指定海报的页数、风格和需要突出的信息，让我们即刻开始创作！"
+        - id: c49795e9-f6f3-4338-957e-a99efd848077
+          role: user
+          text: 请根据这个{{#1750553534724.text#}}帮我生成一个宣传海报，1-2页A4纸张内容覆盖内容即可，可以使用SVG方式生成
+        selected: false
+        title: 生成 SVG海报设计专家
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 89
+      id: '1750402968238'
+      position:
+        x: 786.7752557184851
+        y: 237.77948307524548
+      positionAbsolute:
+        x: 786.7752557184851
+        y: 237.77948307524548
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        desc: ''
+        is_team_authorization: true
+        output_schema:
+          properties:
+            full_zip_url:
+              description: The zip URL of the complete parsed result
+              type: string
+            images:
+              description: The images extracted from the file
+              items:
+                type: object
+              type: array
+          type: object
+        paramSchemas:
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: the file to be parsed(support pdf, ppt, pptx, doc, docx, png, jpg,
+              jpeg)
+            ja_JP: 解析するファイル(pdf、ppt、pptx、doc、docx、png、jpg、jpegをサポート)
+            pt_BR: the file to be parsed(support pdf, ppt, pptx, doc, docx, png, jpg,
+              jpeg)
+            zh_Hans: 用于解析的文件(支持 pdf, ppt, pptx, doc, docx, png, jpg, jpeg)
+          label:
+            en_US: file
+            ja_JP: file
+            pt_BR: file
+            zh_Hans: file
+          llm_description: the file to be parsed (support pdf, ppt, pptx, doc, docx,
+            png, jpg, jpeg)
+          max: null
+          min: null
+          name: file
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: file
+        - auto_generate: null
+          default: auto
+          form: form
+          human_description:
+            en_US: (For local deployment service)Parsing method, can be auto, ocr,
+              or txt. Default is auto. If results are not satisfactory, try ocr
+            ja_JP: （ローカルデプロイメントサービス用）解析方法は、auto、ocr、またはtxtのいずれかです。デフォルトはautoです。結果が満足できない場合は、ocrを試してください
+            pt_BR: (For local deployment service)Parsing method, can be auto, ocr,
+              or txt. Default is auto. If results are not satisfactory, try ocr
+            zh_Hans: （用于本地部署服务）解析方法，可以是auto, ocr, 或 txt。默认是auto。如果结果不理想，请尝试ocr
+          label:
+            en_US: parse method
+            ja_JP: 解析方法
+            pt_BR: parse method
+            zh_Hans: 解析方法
+          llm_description: Parsing method, can be auto, ocr, or txt. Default is auto.
+            If results are not satisfactory, try ocr
+          max: null
+          min: null
+          name: parse_method
+          options:
+          - label:
+              en_US: auto
+              ja_JP: auto
+              pt_BR: auto
+              zh_Hans: auto
+            value: auto
+          - label:
+              en_US: ocr
+              ja_JP: ocr
+              pt_BR: ocr
+              zh_Hans: ocr
+            value: ocr
+          - label:
+              en_US: txt
+              ja_JP: txt
+              pt_BR: txt
+              zh_Hans: txt
+            value: txt
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: select
+        - auto_generate: null
+          default: 1
+          form: form
+          human_description:
+            en_US: (For official API) Whether to enable formula recognition
+            ja_JP: （公式API用）数式認識を有効にするかどうか
+            pt_BR: (For official API) Whether to enable formula recognition
+            zh_Hans: （用于官方API）是否开启公式识别
+          label:
+            en_US: Enable formula recognition
+            ja_JP: 数式認識を有効にする
+            pt_BR: Enable formula recognition
+            zh_Hans: 开启公式识别
+          llm_description: (For official API) Whether to enable formula recognition
+          max: null
+          min: null
+          name: enable_formula
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: boolean
+        - auto_generate: null
+          default: 1
+          form: form
+          human_description:
+            en_US: (For official API) Whether to enable table recognition
+            ja_JP: （公式API用）表認識を有効にするかどうか
+            pt_BR: (For official API) Whether to enable table recognition
+            zh_Hans: （用于官方API）是否开启表格识别
+          label:
+            en_US: Enable table recognition
+            ja_JP: 表認識を有効にする
+            pt_BR: Enable table recognition
+            zh_Hans: 开启表格识别
+          llm_description: (For official API) Whether to enable table recognition
+          max: null
+          min: null
+          name: enable_table
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: boolean
+        - auto_generate: null
+          default: doclayout_yolo
+          form: form
+          human_description:
+            en_US: '(For official API) Optional values: doclayout_yolo, layoutlmv3,
+              default value is doclayout_yolo. doclayout_yolo is a self-developed
+              model with better effect'
+            ja_JP: （公式API用）オプション値：doclayout_yolo、layoutlmv3、デフォルト値は doclayout_yolo。doclayout_yolo
+              は自己開発モデルで、効果がより良い
+            pt_BR: '(For official API) Optional values: doclayout_yolo, layoutlmv3,
+              default value is doclayout_yolo. doclayout_yolo is a self-developed
+              model with better effect'
+            zh_Hans: （用于官方API）可选值：doclayout_yolo、layoutlmv3，默认值为 doclayout_yolo。doclayout_yolo
+              为自研模型，效果更好
+          label:
+            en_US: Layout model
+            ja_JP: レイアウト検出モデル
+            pt_BR: Layout model
+            zh_Hans: 布局检测模型
+          llm_description: '(For official API) Optional values: doclayout_yolo, layoutlmv3,
+            default value is doclayout_yolo. doclayout_yolo is a self-developed model
+            withbetter effect'
+          max: null
+          min: null
+          name: layout_model
+          options:
+          - label:
+              en_US: doclayout_yolo
+              ja_JP: doclayout_yolo
+              pt_BR: doclayout_yolo
+              zh_Hans: doclayout_yolo
+            value: doclayout_yolo
+          - label:
+              en_US: layoutlmv3
+              ja_JP: layoutlmv3
+              pt_BR: layoutlmv3
+              zh_Hans: layoutlmv3
+            value: layoutlmv3
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: select
+        - auto_generate: null
+          default: auto
+          form: form
+          human_description:
+            en_US: '(For official API) Specify document language, default ch, can
+              be set to auto, when auto, the model will automatically identify document
+              language, other optional value list see: https://paddlepaddle.github.io/PaddleOCR/latest/ppocr/blog/multi_languages.html#5'
+            ja_JP: （公式API用）ドキュメント言語を指定します。デフォルトはchで、autoに設定できます。autoの場合、モデルはドキュメント言語を自動的に識別します。他のオプション値リストについては、次を参照してください：https://paddlepaddle.github.io/PaddleOCR/latest/ppocr/blog/multi_languages.html#5
+            pt_BR: '(For official API) Specify document language, default ch, can
+              be set to auto, when auto, the model will automatically identify document
+              language, other optional value list see: https://paddlepaddle.github.io/PaddleOCR/latest/ppocr/blog/multi_languages.html#5'
+            zh_Hans: （用于官方API）指定文档语言，默认 ch，可以设置为auto，当为auto时模型会自动识别文档语言，其他可选值列表详见：https://paddlepaddle.github.io/PaddleOCR/latest/ppocr/blog/multi_languages.html#5
+          label:
+            en_US: Document language
+            ja_JP: ドキュメント言語
+            pt_BR: Document language
+            zh_Hans: 文档语言
+          llm_description: '(For official API) Specify document language, default
+            ch, can be set to auto, when auto, the model will automatically identify
+            document language, other optional value list see: https://paddlepaddle.github.io/PaddleOCR/latest/ppocr/blog/multi_languages.html#5'
+          max: null
+          min: null
+          name: language
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: 0
+          form: form
+          human_description:
+            en_US: (For official API) Whether to enable OCR recognition
+            ja_JP: （公式API用）OCR認識を有効にするかどうか
+            pt_BR: (For official API) Whether to enable OCR recognition
+            zh_Hans: （用于官方API）是否开启OCR识别
+          label:
+            en_US: Enable OCR recognition
+            ja_JP: OCR認識を有効にする
+            pt_BR: Enable OCR recognition
+            zh_Hans: 开启OCR识别
+          llm_description: (For official API) Whether to enable OCR recognition
+          max: null
+          min: null
+          name: enable_ocr
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: boolean
+        - auto_generate: null
+          default: '[]'
+          form: form
+          human_description:
+            en_US: '(For official API) Example: ["docx","html"], markdown, json are
+              the default export formats, no need to set, this parameter only supports
+              one or more of docx, html, latex'
+            ja_JP: （公式API用）例：["docx","html"]、markdown、jsonはデフォルトのエクスポート形式であり、設定する必要はありません。このパラメータは、docx、html、latexの3つの形式のいずれかまたは複数のみをサポートします
+            pt_BR: '(For official API) Example: ["docx","html"], markdown, json are
+              the default export formats, no need to set, this parameter only supports
+              one or more of docx, html, latex'
+            zh_Hans: （用于官方API）示例：["docx","html"],markdown、json为默认导出格式，无须设置，该参数仅支持docx、html、latex三种格式中的一个或多个
+          label:
+            en_US: Extra export formats
+            ja_JP: 追加のエクスポート形式
+            pt_BR: Extra export formats
+            zh_Hans: 额外导出格式
+          llm_description: '(For official API) Example: ["docx","html"], markdown,
+            json are the default export formats, no need to set, this parameter only
+            supports one or more of docx, html, latex'
+          max: null
+          min: null
+          name: extra_formats
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        params:
+          enable_formula: ''
+          enable_ocr: ''
+          enable_table: ''
+          extra_formats: ''
+          file: ''
+          language: ''
+          layout_model: ''
+          parse_method: ''
+        provider_id: langgenius/mineru/mineru
+        provider_name: langgenius/mineru/mineru
+        provider_type: builtin
+        selected: false
+        title: Parse File
+        tool_configurations:
+          enable_formula: 1
+          enable_ocr: 0
+          enable_table: 1
+          extra_formats: '[]'
+          language: auto
+          layout_model: doclayout_yolo
+          parse_method: auto
+        tool_description: 一个用于解析文本，表格和图片的工具，支持pdf,pptx,docx等多种格式。支持英语，中文等多种语言
+        tool_label: Parse File
+        tool_name: parse-file
+        tool_parameters:
+          file:
+            type: variable
+            value:
+            - '1744785564443'
+            - file
+        type: tool
+      height: 245
+      id: '1750553534724'
+      position:
+        x: 453.54161293779265
+        y: 237.77948307524548
+      positionAbsolute:
+        x: 453.54161293779265
+        y: 237.77948307524548
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        answer: ' {{#1750402968238.text#}}'
+        desc: ''
+        selected: true
+        title: ' SVG海报'
+        type: answer
+        variables: []
+      height: 104
+      id: '1750554197380'
+      position:
+        x: 1147.9293762343543
+        y: 237.77948307524548
+      positionAbsolute:
+        x: 1147.9293762343543
+        y: 237.77948307524548
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    viewport:
+      x: -228.00481105291828
+      y: 161.92204467179403
+      zoom: 1.0717734465954576
