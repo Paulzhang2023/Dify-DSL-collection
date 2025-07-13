@@ -1,0 +1,377 @@
+app:
+  description: 通过知识检索从知识库中检索出带有图片链接的内容，然后借助HTTP请求节点将图片链接显示出来，实现一个直观且吸引人的图文结合客服交互场景，为用户带来更加生动、便捷的沟通体验。
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: 知识库中搜索图像
+  use_icon_as_answer_icon: false
+kind: app
+version: 0.1.2
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: knowledge-retrieval
+      id: 1726981303445-source-1726981318917-target
+      source: '1726981303445'
+      sourceHandle: source
+      target: '1726981318917'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: knowledge-retrieval
+        targetType: llm
+      id: 1726981318917-source-llm-target
+      source: '1726981318917'
+      sourceHandle: source
+      target: llm
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: parameter-extractor
+      id: llm-source-1726981615323-target
+      source: llm
+      sourceHandle: source
+      target: '1726981615323'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: parameter-extractor
+        targetType: if-else
+      id: 1726981615323-source-1726981765266-target
+      source: '1726981615323'
+      sourceHandle: source
+      target: '1726981765266'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: answer
+      id: 1726981765266-true-answer-target
+      source: '1726981765266'
+      sourceHandle: 'true'
+      target: answer
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: http-request
+      id: 1726981765266-false-1726981824562-target
+      source: '1726981765266'
+      sourceHandle: 'false'
+      target: '1726981824562'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: http-request
+        targetType: answer
+      id: 1726981824562-source-1726981904756-target
+      source: '1726981824562'
+      sourceHandle: source
+      target: '1726981904756'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables: []
+      height: 64
+      id: '1726981303445'
+      position:
+        x: 172.03066982661255
+        y: 257.03583960076986
+      positionAbsolute:
+        x: 172.03066982661255
+        y: 257.03583960076986
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1726981318917'
+          - result
+        desc: ''
+        memory:
+          query_prompt_template: '{{#sys.query#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: false
+            size: 10
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: qwen-max-latest
+          provider: tongyi
+        prompt_template:
+        - id: 82ac95af-6855-4904-ac29-6d81cb8628c7
+          role: system
+          text: "## 角色\n你是一位亲子运动游戏创意专家，根据提供的{{#context#}}信息生成用户需要的亲子运动游戏。不要改变亲子运动游戏格式，要包含亲子运动项目名称、适合年龄、运动时间、运动目标、运动规则、特别提示。\n\
+            \n## 限制\n1.根据用户的具体提问回答问题，不要一下子把常见问题都输出给用户，\n2.请使用json格式输出，不要输出任何与json格式无关的内容。\n\
+            \n## 输出要求\n- 如果输出的内容包含图片URL，请使用以下JSON格式输出：\n  {\n    \"content\": \"示例输出内容\"\
+            ,\n    \"imageUrl\": \"图片地址\"\n  }\n3. 如果输出的内容不包含图片URL，请使用以下JSON格式输出：\n\
+            {\n  \"content\": \"示例输出内容\"\n}"
+        selected: false
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 119
+      id: llm
+      position:
+        x: 769.6854643711162
+        y: 257.03583960076986
+      positionAbsolute:
+        x: 769.6854643711162
+        y: 257.03583960076986
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        answer: '{{#1726981615323.content#}}'
+        desc: ''
+        selected: false
+        title: 直接回复
+        type: answer
+        variables: []
+      height: 118
+      id: answer
+      position:
+        x: 1646.1144684337828
+        y: 257.03583960076986
+      positionAbsolute:
+        x: 1646.1144684337828
+        y: 257.03583960076986
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        dataset_ids:
+        - 883d5ac5-715d-49f7-8226-d6bb221d8cc7
+        - 96fe1cbd-bbe3-43df-bb40-196b7060aa33
+        desc: ''
+        multiple_retrieval_config:
+          reranking_enable: true
+          reranking_mode: reranking_model
+          reranking_model:
+            model: netease-youdao/bce-reranker-base_v1
+            provider: siliconflow
+          score_threshold: null
+          top_k: 4
+        query_variable_selector:
+        - '1726981303445'
+        - sys.query
+        retrieval_mode: multiple
+        selected: true
+        title: 知识检索
+        type: knowledge-retrieval
+      height: 105
+      id: '1726981318917'
+      position:
+        x: 488.7764197530373
+        y: 257.03583960076986
+      positionAbsolute:
+        x: 488.7764197530373
+        y: 257.03583960076986
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: qwen2.5:latest
+          provider: ollama
+        parameters:
+        - description: 内容文本
+          name: content
+          required: false
+          type: string
+        - description: 图片链接
+          name: imageUrl
+          required: false
+          type: string
+        query:
+        - llm
+        - text
+        reasoning_mode: prompt
+        selected: false
+        title: 参数提取器
+        type: parameter-extractor
+        variables: []
+      height: 119
+      id: '1726981615323'
+      position:
+        x: 1056.6956296915014
+        y: 257.03583960076986
+      positionAbsolute:
+        x: 1056.6956296915014
+        y: 257.03583960076986
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: empty
+            id: e76eb624-34fc-4239-b8e1-ab1f67af8d5f
+            value: ''
+            varType: string
+            variable_selector:
+            - '1726981615323'
+            - imageUrl
+          id: 'true'
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: 条件分支
+        type: if-else
+      height: 154
+      id: '1726981765266'
+      position:
+        x: 1336.5542344088608
+        y: 257.03583960076986
+      positionAbsolute:
+        x: 1336.5542344088608
+        y: 257.03583960076986
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data:
+          - type: text
+            value: ''
+          type: none
+        desc: ''
+        headers: ''
+        method: get
+        params: ''
+        selected: false
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: HTTP 请求
+        type: http-request
+        url: '{{#1726981615323.imageUrl#}}'
+        variables: []
+      height: 115
+      id: '1726981824562'
+      position:
+        x: 1646.1144684337828
+        y: 398.4903336208573
+      positionAbsolute:
+        x: 1646.1144684337828
+        y: 398.4903336208573
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        answer: '{{#1726981615323.content#}}
+
+          {{#1726981824562.files#}}'
+        desc: ''
+        selected: false
+        title: 直接回复 2
+        type: answer
+        variables: []
+      height: 139
+      id: '1726981904756'
+      position:
+        x: 1920.6598612578873
+        y: 398.4903336208573
+      positionAbsolute:
+        x: 1920.6598612578873
+        y: 398.4903336208573
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    viewport:
+      x: -1124.0796335331033
+      y: -88.44045359716665
+      zoom: 1.055046269929061
