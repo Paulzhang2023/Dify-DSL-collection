@@ -1,0 +1,459 @@
+app:
+  description: “HR简历筛选”智能体采用多维度、全面且细致的评分方式，为 HR 提供了高效精准的筛选体系。HR 无需再耗费大量时间手动筛选，只需参考智能体的评分结果，即可快速锁定最优简历，大幅提升工作效率，从繁琐的筛选中解放出来，专注于更具战略价值的人力资源管理。
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: 智筛简历
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/ollama:0.0.3@9ded90ac00e8510119a24be7396ba77191c9610d5e1e29f59d68fa1229822fc7
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/siliconflow:0.0.8@217f973bd7ced1b099c2f0c669f1356bdf4cc38b8372fd58d7874f9940b95de3
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/feishu_document:0.0.1@5c16426317d871a0abf4d81bec1d1ef1a5b7f34491d429a453c13bdc1fb2fa82
+kind: app
+version: 0.1.5
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: tool
+      id: 1742643470741-source-1742648570727-target
+      selected: false
+      source: '1742643470741'
+      sourceHandle: source
+      target: '1742648570727'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: document-extractor
+      id: 1742643330552-source-1742648746427-target
+      source: '1742643330552'
+      sourceHandle: source
+      target: '1742648746427'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: document-extractor
+        targetType: llm
+      id: 1742648746427-source-1742643470741-target
+      source: '1742648746427'
+      sourceHandle: source
+      target: '1742643470741'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: template-transform
+      id: 1742648570727-source-1742648802853-target
+      selected: false
+      source: '1742648570727'
+      sourceHandle: source
+      target: '1742648802853'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: template-transform
+        targetType: llm
+      id: 1742648802853-source-1742648815743-target
+      selected: false
+      source: '1742648802853'
+      sourceHandle: source
+      target: '1742648815743'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: tool
+      id: 1742648815743-source-1742648849032-target
+      selected: false
+      source: '1742648815743'
+      sourceHandle: source
+      target: '1742648849032'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: end
+      id: 1742648849032-source-1742648769469-target
+      selected: false
+      source: '1742648849032'
+      sourceHandle: source
+      target: '1742648769469'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - allowed_file_extensions: []
+          allowed_file_types:
+          - document
+          allowed_file_upload_methods:
+          - local_file
+          - remote_url
+          label: 简历
+          max_length: 48
+          options: []
+          required: true
+          type: file
+          variable: jianli
+        - allowed_file_extensions: []
+          allowed_file_types:
+          - document
+          allowed_file_upload_methods:
+          - local_file
+          - remote_url
+          label: 招聘要求
+          max_length: 2000
+          options: []
+          required: true
+          type: paragraph
+          variable: zhaopinyaoqiu
+      height: 142
+      id: '1742643330552'
+      position:
+        x: -280.6221041014545
+        y: 122.69077331436097
+      positionAbsolute:
+        x: -280.6221041014545
+        y: 122.69077331436097
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params: {}
+          mode: chat
+          name: deepseek-ai/DeepSeek-V3
+          provider: langgenius/siliconflow/siliconflow
+        prompt_template:
+        - id: 177b31d6-d14e-4745-82ac-e997fca8a1f9
+          role: system
+          text: '你是一个招聘专家，你根据简历{{#1742648746427.text#}}的内容，结合部门岗位要求：“{{#1742643330552.zhaopinyaoqiu#}}”进行打分，打分分为HR打分，部门打分
+
+            ###HR打分
+
+            *总分：100分
+
+            *工作断层：工作有1-3个月断层扣5分
+
+            *工作地点与部门要求不一致扣25分
+
+            *学历分，学历低于部门要求的扣25分，高于部门要求，每高一个级别增加5分
+
+            *薪资匹配度，薪资和部门要求有上浮，下浮10%的扣5分，每增加幅度5%扣5分，如果是员工简历低于部门要求幅度情况不扣分。
+
+            *培训经历，有培训经历加5分
+
+            *证书，有证书加5分
+
+            *往期单个公司任职时间，某一段履历低于6个月的扣10分。
+
+            ###部门打分
+
+            *总分:100分
+
+            *任职要求，简历中和任职要求匹配度，不匹配扣25分。
+
+            *其他方面不做扣分
+
+            输出要求：只输出 顺序后的：员工姓名，手机，学历，邮箱，HR打分，部门打分，输出到一个表格格式进行输出，表格输出在前，分析过程输出在后。
+
+            输出部门岗位要求：
+
+            '
+        selected: false
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 109
+      id: '1742643470741'
+      position:
+        x: 324.0460161808295
+        y: 122.69077331436097
+      positionAbsolute:
+        x: 324.0460161808295
+        y: 122.69077331436097
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: ''
+        provider_id: feishu_document
+        provider_name: feishu_document
+        provider_type: builtin
+        selected: false
+        title: 创建飞书文档
+        tool_configurations: {}
+        tool_label: 创建飞书文档
+        tool_name: create_document
+        tool_parameters:
+          content:
+            type: mixed
+            value: ''
+          folder_token:
+            type: mixed
+            value: ''
+          title:
+            type: mixed
+            value: 开发员工打分表
+        type: tool
+      height: 64
+      id: '1742648570727'
+      position:
+        x: 623.619656331109
+        y: 349.5889067643763
+      positionAbsolute:
+        x: 623.619656331109
+        y: 349.5889067643763
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: ''
+        is_array_file: false
+        selected: false
+        title: 文档提取简历
+        type: document-extractor
+        variable_selector:
+        - '1742643330552'
+        - jianli
+      height: 107
+      id: '1742648746427'
+      position:
+        x: 57.78351620936104
+        y: 122.69077331436097
+      positionAbsolute:
+        x: 57.78351620936104
+        y: 122.69077331436097
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1742648815743'
+          - text
+          variable: http
+        selected: true
+        title: 结束
+        type: end
+      height: 109
+      id: '1742648769469'
+      position:
+        x: 1703.1234392614836
+        y: 349.5889067643763
+      positionAbsolute:
+        x: 1703.1234392614836
+        y: 349.5889067643763
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: ''
+        selected: false
+        template: '{{ arg1 }}'
+        title: 模板转换
+        type: template-transform
+        variables:
+        - value_selector:
+          - '1742648570727'
+          - json
+          variable: arg1
+      height: 64
+      id: '1742648802853'
+      position:
+        x: 873.6115115499654
+        y: 349.5889067643763
+      positionAbsolute:
+        x: 873.6115115499654
+        y: 349.5889067643763
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1742648802853'
+          - output
+        desc: ''
+        model:
+          completion_params: {}
+          mode: chat
+          name: qwen2.5:latest
+          provider: langgenius/ollama/ollama
+        prompt_template:
+        - id: 909d2889-c820-49c2-8444-dedecb414a0f
+          role: system
+          text: 提取{{#1742648802853.output#}} 的url部分的内容 只输出http地址，只输出http结果，不输出json格式，纯字符串
+        selected: false
+        title: 飞书转换LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 109
+      id: '1742648815743'
+      position:
+        x: 1140.2419943792088
+        y: 349.5889067643763
+      positionAbsolute:
+        x: 1140.2419943792088
+        y: 349.5889067643763
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: ''
+        provider_id: feishu_document
+        provider_name: feishu_document
+        provider_type: builtin
+        selected: false
+        title: 在飞书文档中新增内容
+        tool_configurations:
+          position: end
+        tool_label: 在飞书文档中新增内容
+        tool_name: write_document
+        tool_parameters:
+          content:
+            type: mixed
+            value: '{{#1742643470741.text#}}'
+          document_id:
+            type: mixed
+            value: '{{#1742648815743.text#}}'
+        type: tool
+      height: 109
+      id: '1742648849032'
+      position:
+        x: 1405.832047285005
+        y: 349.5889067643763
+      positionAbsolute:
+        x: 1405.832047285005
+        y: 349.5889067643763
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        author: M
+        desc: ''
+        height: 237
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[],"direction":null,"format":"","indent":0,"type":"root","version":1}}'
+        theme: pink
+        title: ''
+        type: ''
+        width: 1051
+      height: 237
+      id: '1742897920014'
+      position:
+        x: 610.4413172167895
+        y: 285.6090337360146
+      positionAbsolute:
+        x: 610.4413172167895
+        y: 285.6090337360146
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 1051
+    viewport:
+      x: 130.44744162190193
+      y: 144.53352250998483
+      zoom: 0.5268833825027991
