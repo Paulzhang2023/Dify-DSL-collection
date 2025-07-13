@@ -1,0 +1,506 @@
+app:
+  description: 合同风控检查是AI驱动的智能合同审查与生成系统，它能自动扫描合同法律风险，优化条款以最大化主体利益。系统支持生成带修订批注的Word和PDF文件。
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: 合同风控检查
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/siliconflow:0.0.9@d0bed72582f8945dba4bf0fb23e03a449e7319f7cb0056ce02bfc76ca3f08215
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: bowenliang123/md_exporter:1.2.0@b18d95d19f25ed9c73d758048a69cf37c14c1f9f801b354aa7469db44f0df4d6
+kind: app
+version: 0.2.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: llm
+      id: 1747282505394-source-1747282634133-target
+      source: '1747282505394'
+      sourceHandle: source
+      target: '1747282634133'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: document-extractor
+      id: 1747282634133-source-1747282712236-target
+      source: '1747282634133'
+      sourceHandle: source
+      target: '1747282712236'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: document-extractor
+        targetType: llm
+      id: 1747282712236-source-1747282734227-target
+      source: '1747282712236'
+      sourceHandle: source
+      target: '1747282734227'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: tool
+      id: 1747282734227-source-1747282864008-target
+      source: '1747282734227'
+      sourceHandle: source
+      target: '1747282864008'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: tool
+        targetType: tool
+      id: 1747282864008-source-1747282899572-target
+      source: '1747282864008'
+      sourceHandle: source
+      target: '1747282899572'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: tool
+        targetType: end
+      id: 1747282899572-source-1747282938408-target
+      source: '1747282899572'
+      sourceHandle: source
+      target: '1747282938408'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: true
+        title: 开始
+        type: start
+        variables:
+        - allowed_file_extensions: []
+          allowed_file_types:
+          - image
+          - document
+          allowed_file_upload_methods:
+          - local_file
+          label: 文件列表
+          max_length: 5
+          options: []
+          required: true
+          type: file-list
+          variable: upload
+        - label: 审查主体
+          max_length: 256
+          options: []
+          required: true
+          type: text-input
+          variable: Apart
+        - label: 工作领域
+          max_length: 256
+          options: []
+          required: true
+          type: text-input
+          variable: wordfiled
+        - label: 合同要点
+          max_length: 256
+          options: []
+          required: true
+          type: text-input
+          variable: attention
+      height: 207
+      id: '1747282505394'
+      position:
+        x: 80
+        y: 282
+      positionAbsolute:
+        x: 80
+        y: 282
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params: {}
+          mode: chat
+          name: deepseek-ai/DeepSeek-V3
+          provider: langgenius/siliconflow/siliconflow
+        prompt_template:
+        - id: df67e5c1-824f-4166-834e-14bf220abfc5
+          role: system
+          text: '{{#1747282505394.attention#}}将用户的要求或关注点转换为具体的合同审查要点，并输出为提示词中的attention
+
+            '
+        selected: false
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 109
+      id: '1747282634133'
+      position:
+        x: 383
+        y: 282
+      positionAbsolute:
+        x: 383
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: ''
+        is_array_file: true
+        selected: false
+        title: 文档提取器
+        type: document-extractor
+        variable_selector:
+        - '1747282505394'
+        - upload
+      height: 107
+      id: '1747282712236'
+      position:
+        x: 689
+        y: 282
+      positionAbsolute:
+        x: 689
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1747282712236'
+          - text
+        desc: ''
+        model:
+          completion_params: {}
+          mode: chat
+          name: deepseek-ai/DeepSeek-V3
+          provider: langgenius/siliconflow/siliconflow
+        prompt_template:
+        - id: 0a544dd5-fb37-487c-8180-3920a8ba9e32
+          role: system
+          text: '#角色
+
+            你是一位专业的律师，执业领域是{{#1747282505394.wordfiled#}}
+
+            # 任务
+
+            你要以{{#1747282505394.Apart#}}利益最大化为原则，对{{#context#}}进行审查和分析，并提供严格的评分。具体目标:
+
+            1.对提交的合同文本进行全面审查，指出存在的问题和风险；
+
+            2.提供具体的改进建议，帮助改进和完善合同条款;
+
+            3.根据法律规范和个人建议，修改并完善合同的具体条款:
+
+            4.向客户提供专业的法律服务和支持。
+
+            #约束条件:
+
+            1.必须遵守现行有效的法律法规，不能引用已废止的法律条文；
+
+            2.所有合同条款的设计应当符合最新的法律法规及相关政策的规定，要使用准确无误的专业术语和地名:
+
+            3.结合特定行业的特点(如XXX行业)，确保合同内容贴合实际情况。
+
+            4,考虏并反映{{#1747282505394.Apart#}}的需求，始终站在其角度满足利益最大化。'
+        selected: false
+        title: LLM 2
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 109
+      id: '1747282734227'
+      position:
+        x: 992
+        y: 282
+      positionAbsolute:
+        x: 992
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: ''
+        is_team_authorization: true
+        output_schema: null
+        paramSchemas:
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: Markdown text
+            ja_JP: Markdown text
+            pt_BR: Markdown text
+            zh_Hans: Markdown格式文本
+          label:
+            en_US: Markdown text
+            ja_JP: Markdown text
+            pt_BR: Markdown text
+            zh_Hans: Markdown格式文本
+          llm_description: ''
+          max: null
+          min: null
+          name: md_text
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: Filename of the output file
+            ja_JP: Filename of the output file
+            pt_BR: Filename of the output file
+            zh_Hans: 输出文件名
+          label:
+            en_US: Filename of the output file
+            ja_JP: Filename of the output file
+            pt_BR: Filename of the output file
+            zh_Hans: 输出文件名
+          llm_description: ''
+          max: null
+          min: null
+          name: output_filename
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        params:
+          md_text: ''
+          output_filename: ''
+        provider_id: bowenliang123/md_exporter/md_exporter
+        provider_name: bowenliang123/md_exporter/md_exporter
+        provider_type: builtin
+        selected: false
+        title: Markdown转PDF文件
+        tool_configurations: {}
+        tool_description: 一个用于将Markdown转换为PDF文件的工具
+        tool_label: Markdown转PDF文件
+        tool_name: md_to_pdf
+        tool_parameters:
+          md_text:
+            type: mixed
+            value: '{{#1747282734227.text#}}'
+        type: tool
+      height: 64
+      id: '1747282864008'
+      position:
+        x: 1295
+        y: 282
+      positionAbsolute:
+        x: 1295
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: ''
+        is_team_authorization: true
+        output_schema: null
+        paramSchemas:
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: Markdown text
+            ja_JP: Markdown text
+            pt_BR: Markdown text
+            zh_Hans: Markdown格式文本
+          label:
+            en_US: Markdown text
+            ja_JP: Markdown text
+            pt_BR: Markdown text
+            zh_Hans: Markdown格式文本
+          llm_description: ''
+          max: null
+          min: null
+          name: md_text
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: Filename of the output file
+            ja_JP: Filename of the output file
+            pt_BR: Filename of the output file
+            zh_Hans: 输出文件名
+          label:
+            en_US: Filename of the output file
+            ja_JP: Filename of the output file
+            pt_BR: Filename of the output file
+            zh_Hans: 输出文件名
+          llm_description: ''
+          max: null
+          min: null
+          name: output_filename
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        params:
+          md_text: ''
+          output_filename: ''
+        provider_id: bowenliang123/md_exporter/md_exporter
+        provider_name: bowenliang123/md_exporter/md_exporter
+        provider_type: builtin
+        selected: false
+        title: Markdown转Docx文件
+        tool_configurations: {}
+        tool_description: 一个用于将Markdown转换为DOCX文件的工具
+        tool_label: Markdown转Docx文件
+        tool_name: md_to_docx
+        tool_parameters:
+          md_text:
+            type: mixed
+            value: '{{#1747282734227.text#}}'
+          output_filename:
+            type: mixed
+            value: '{{#1747282734227.text#}}'
+        type: tool
+      height: 64
+      id: '1747282899572'
+      position:
+        x: 1598
+        y: 282
+      positionAbsolute:
+        x: 1598
+        y: 282
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1747282734227'
+          - text
+          variable: shencha
+        - value_selector:
+          - '1747282864008'
+          - files
+          variable: PDF
+        - value_selector:
+          - '1747282899572'
+          - files
+          variable: DOCX
+        selected: false
+        title: 结束
+        type: end
+      height: 174
+      id: '1747282938408'
+      position:
+        x: 1901
+        y: 282
+      positionAbsolute:
+        x: 1901
+        y: 282
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    viewport:
+      x: 48.490918781636765
+      y: -54.515871925624765
+      zoom: 0.6897449103675467
